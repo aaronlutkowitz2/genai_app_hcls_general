@@ -321,7 +321,7 @@ for indexA, valueA in enumerate(list_of_labels_to_create):
 
   # Run the second model
   predict_large_language_model_sample(
-      "cloud-llm-preview3" # project
+      project_id # project
     , model_id # endpoint_id; this refers to the relevant model
     , model_temperature # 0.2 # temperature
     , 1 # force this to be 1 -- yes, no
