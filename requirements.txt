@@ -1,3 +1,9 @@
+google-cloud-aiplatform
+vertexai
+seaborn sns
 pandas
 streamlit
-plotly
+datetime
+pytz
+ast
+
