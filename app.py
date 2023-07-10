@@ -18,6 +18,8 @@ import plotly.express as px
 st.title("Iris Streamlit App")
 st.markdown("This is a demo Streamlit app.")
 
+st.write("Test, test, test")
+
 # @st.cache(persist=True)
 # def load_data():
 #     df = pd.read_csv("https://datahub.io/machine-learning/iris/r/iris.csv")
