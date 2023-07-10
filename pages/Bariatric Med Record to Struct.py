@@ -171,7 +171,7 @@ st.write(':blue[**File Name:**] ' + file_name)
 
 # Download File
 bucket_name = "hcls_genai"
-client = storage.Client(cloudadopt)
+client = storage.Client()
 bucket = client.bucket(bucket_name)
 blob = str(bucket.blob(file_name).download_as_string())
 st.write(':green[**Complete**] File Downloaded')
