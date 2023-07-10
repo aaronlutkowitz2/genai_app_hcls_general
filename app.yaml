@@ -1,6 +1,0 @@
-service: streamlit-test-app
-runtime: custom
-env: flex
-
-network:
-  name: cloudadopt
