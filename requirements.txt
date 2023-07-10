@@ -1,6 +1,6 @@
 google-cloud-aiplatform
-# vertexai
-seaborn sns
+vertexai
+seaborn
 pandas
 streamlit
 datetime
