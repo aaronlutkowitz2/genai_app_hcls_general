@@ -17,7 +17,7 @@ from google.protobuf.struct_pb2 import Value
 # from google.protobuf import json_format
 # from google.protobuf.struct_pb2 import Value
 import vertexai
-from vertexai.preview.language_models import TextGenerationModel
+from vertexai.language_models import TextGenerationModel
 
 # others 
 import streamlit as st
@@ -84,6 +84,33 @@ st.title('GCP HCLS GenAI Demo: CCDA Bariatrics Use Case')
 st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 st.write('**Date**: 2023-06-21')
 st.write('**Purpose**: Hospital needs to know if a patient has ever had a history of bariatric surgery at another hospital system, by reviewing a patient\'s CCDA document.')
+
+
+## Test 
+
+st.write('Perform a test')
+st.write('Perform a test')
+st.write('Perform a test')
+
+vertexai.init(project="cloudadopt", location="us-central1")
+parameters = {
+    "temperature": 0.2,
+    "max_output_tokens": 256,
+    "top_p": 0.8,
+    "top_k": 40
+}
+model = TextGenerationModel.from_pretrained("text-bison@001")
+response = model.predict(
+    """What should I have for lunch?""",
+    **parameters
+)
+print(f"Response from Model: {response.text}")
+
+variable = response.text
+st.write(variable)
+st.write('Perform a test')
+st.write('Perform a test')
+st.write('Perform a test')
 
 # Model Inputs
 st.header('1. Model Inputs')
