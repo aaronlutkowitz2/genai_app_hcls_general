@@ -7,7 +7,7 @@ Creation Date: July 10, 2023
 """
 # Import
 import streamlit as st
-from google.cloud import storage
+# from google.cloud import storage
 import vertexai
 from vertexai.preview.language_models import TextGenerationModel
 import pandas as pd
