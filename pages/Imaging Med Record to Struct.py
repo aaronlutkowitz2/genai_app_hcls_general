@@ -16,37 +16,37 @@ from datetime import datetime
 import datetime, pytz
 import seaborn as sns
 
-# Import LLM Model
-global llm_response
-llm_response = 'xyz123'
+# # Import LLM Model
+# global llm_response
+# llm_response = 'xyz123'
 
-def predict_large_language_model_sample(
-    project_id: str,
-    model_name: str,
-    temperature: float,
-    max_decode_steps: int,
-    top_p: float,
-    top_k: int,
-    content: str,
-    location: str = "us-central1",
-    tuned_model_name: str = "",
-    ) :
-    """Predict using a Large Language Model."""
-    vertexai.init(project=project_id, location=location)
-    model = TextGenerationModel.from_pretrained(model_name)
-    if tuned_model_name:
-      model = model.get_tuned_model(tuned_model_name)
-    response = model.predict(
-        content,
-        temperature=temperature,
-        max_output_tokens=max_decode_steps,
-        top_k=top_k,
-        top_p=top_p,)
+# def predict_large_language_model_sample(
+#     project_id: str,
+#     model_name: str,
+#     temperature: float,
+#     max_decode_steps: int,
+#     top_p: float,
+#     top_k: int,
+#     content: str,
+#     location: str = "us-central1",
+#     tuned_model_name: str = "",
+#     ) :
+#     """Predict using a Large Language Model."""
+#     vertexai.init(project=project_id, location=location)
+#     model = TextGenerationModel.from_pretrained(model_name)
+#     if tuned_model_name:
+#       model = model.get_tuned_model(tuned_model_name)
+#     response = model.predict(
+#         content,
+#         temperature=temperature,
+#         max_output_tokens=max_decode_steps,
+#         top_k=top_k,
+#         top_p=top_p,)
 
-    ## Create global llm_response & set it equal to content
-    global llm_response
-    llm_response = 'xyz456'
-    llm_response = response.text
+#     ## Create global llm_response & set it equal to content
+#     global llm_response
+#     llm_response = 'xyz456'
+#     llm_response = response.text
 
 # Make page wide
 st.set_page_config(
@@ -166,19 +166,39 @@ llm_prompt_a_display = st.text(input_prompt_a_1_context + input_prompt_a_2_examp
 llm_prompt_a = input_prompt_a_1_context + input_prompt_a_2_examples + input_prompt_a_3_input + input_prompt_a_4_output
 
 project_id = "cloudadopt"
+location_id = "us-central1"
 
 # Run the first model
-predict_large_language_model_sample(
-    project_id # project
-  , model_id # endpoint_id; this refers to the relevant model
-  , model_temperature # 0.2 # temperature
-  , model_token_limit # 1024 # max_decode_steps
-  , model_top_p # top_p
-  , model_top_k # top_k
-  , f'''{llm_prompt_a}'''
-  , "us-central1" # location
+vertexai.init(
+      project = project_id
+    , location = location_id)
+parameters = {
+    "temperature": model_temperature,
+    "max_output_tokens": model_token_limit,
+    "top_p": model_top_p,
+    "top_k": model_top_k
+}
+model = TextGenerationModel.from_pretrained(model_id)
+response = model.predict(
+    f'''{llm_prompt_a}''',
+    **parameters
 )
-llm_response_text_a = llm_response
+# print(f"Response from Model: {response.text}")
+
+llm_response_text_a = response.text
+
+
+# predict_large_language_model_sample(
+#     project_id # project
+#   , model_id # endpoint_id; this refers to the relevant model
+#   , model_temperature # 0.2 # temperature
+#   , model_token_limit # 1024 # max_decode_steps
+#   , model_top_p # top_p
+#   , model_top_k # top_k
+#   , f'''{llm_prompt_a}'''
+#   , "us-central1" # location
+# )
+# llm_response_text_a = llm_response
 
 st.write(':blue[**List of Labels:**] ' + llm_response_text_a)
 
@@ -319,24 +339,46 @@ for indexA, valueA in enumerate(list_of_labels_to_create):
 
   llm_prompt_b = input_prompt_b_1_context + input_prompt_b_2_question + input_prompt_b_3_file_text
 
-  # Run the second model
-  predict_large_language_model_sample(
-      project_id # project
-    , model_id # endpoint_id; this refers to the relevant model
-    , model_temperature # 0.2 # temperature
-    , 1 # force this to be 1 -- yes, no
-    , model_top_p # top_p
-    , model_top_k # top_k
-    , f'''{llm_prompt_b}'''
-    , "us-central1" # location
+  # Run the first model
+  vertexai.init(
+        project = project_id
+      , location = location_id)
+  parameters = {
+      "temperature": model_temperature,
+      "max_output_tokens": model_token_limit,
+      "top_p": model_top_p,
+      "top_k": model_top_k
+  }
+  model = TextGenerationModel.from_pretrained(model_id)
+  response = model.predict(
+      f'''{llm_prompt_b}''',
+      **parameters
   )
-  llm_response_text_b = llm_response
+  # print(f"Response from Model: {response.text}")
+
+  llm_response_text_b = response.text
+
+
+  # # Run the second model
+  # predict_large_language_model_sample(
+  #     project_id # project
+  #   , model_id # endpoint_id; this refers to the relevant model
+  #   , model_temperature # 0.2 # temperature
+  #   , 1 # force this to be 1 -- yes, no
+  #   , model_top_p # top_p
+  #   , model_top_k # top_k
+  #   , f'''{llm_prompt_b}'''
+  #   , "us-central1" # location
+  # )
+  # llm_response_text_b = llm_response
 
   # Create dataframe
   testdict = {
       'label_name': list_of_labels_to_create[indexA]
     , 'label_outcome': llm_response_text_b
   }
-  df = df.append(testdict, ignore_index=True)
+  df_row = pd.DataFrame(testdict, index=[0])
+  df = pd.concat([df, df_row])
+  # df = df.append(testdict, ignore_index=True)
   most_recent_row = df.tail(1)
   data_table.add_rows(most_recent_row)

@@ -39,37 +39,37 @@ import ast
 from google.cloud import storage
 import seaborn as sns
 
-# Import LLM Model
-global llm_response
-llm_response = 'xyz123'
+# # Import LLM Model
+# global llm_response
+# llm_response = 'xyz123'
 
-def predict_large_language_model_sample(
-    project_id: str,
-    model_name: str,
-    temperature: float,
-    max_decode_steps: int,
-    top_p: float,
-    top_k: int,
-    content: str,
-    location: str = "us-central1",
-    tuned_model_name: str = "",
-    ) :
-    """Predict using a Large Language Model."""
-    vertexai.init(project=project_id, location=location)
-    model = TextGenerationModel.from_pretrained(model_name)
-    if tuned_model_name:
-      model = model.get_tuned_model(tuned_model_name)
-    response = model.predict(
-        content,
-        temperature=temperature,
-        max_output_tokens=max_decode_steps,
-        top_k=top_k,
-        top_p=top_p,)
+# def predict_large_language_model_sample(
+#     project_id: str,
+#     model_name: str,
+#     temperature: float,
+#     max_decode_steps: int,
+#     top_p: float,
+#     top_k: int,
+#     content: str,
+#     location: str = "us-central1",
+#     tuned_model_name: str = "",
+#     ) :
+#     """Predict using a Large Language Model."""
+#     vertexai.init(project=project_id, location=location)
+#     model = TextGenerationModel.from_pretrained(model_name)
+#     if tuned_model_name:
+#       model = model.get_tuned_model(tuned_model_name)
+#     response = model.predict(
+#         content,
+#         temperature=temperature,
+#         max_output_tokens=max_decode_steps,
+#         top_k=top_k,
+#         top_p=top_p,)
 
-    ## Create global llm_response & set it equal to content
-    global llm_response
-    llm_response = 'xyz456'
-    llm_response = response.text
+#     ## Create global llm_response & set it equal to content
+#     global llm_response
+#     llm_response = 'xyz456'
+#     llm_response = response.text
 
 # Make page wide
 st.set_page_config(
@@ -84,33 +84,6 @@ st.title('GCP HCLS GenAI Demo: CCDA Bariatrics Use Case')
 st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 st.write('**Date**: 2023-06-21')
 st.write('**Purpose**: Hospital needs to know if a patient has ever had a history of bariatric surgery at another hospital system, by reviewing a patient\'s CCDA document.')
-
-
-## Test 
-
-st.write('Perform a test')
-st.write('Perform a test')
-st.write('Perform a test')
-
-vertexai.init(project="cloudadopt", location="us-central1")
-parameters = {
-    "temperature": 0.2,
-    "max_output_tokens": 256,
-    "top_p": 0.8,
-    "top_k": 40
-}
-model = TextGenerationModel.from_pretrained("text-bison@001")
-response = model.predict(
-    """What should I have for lunch?""",
-    **parameters
-)
-print(f"Response from Model: {response.text}")
-
-variable = response.text
-st.write(variable)
-st.write('Perform a test')
-st.write('Perform a test')
-st.write('Perform a test')
 
 # Model Inputs
 st.header('1. Model Inputs')
@@ -198,6 +171,7 @@ st.write(':blue[**File Name:**] ' + file_name)
 
 # Download File
 project_id = "cloudadopt"
+location_id = "us-central1"
 bucket_name = "hcls_genai"
 client = storage.Client()
 bucket = client.bucket(bucket_name)
@@ -300,17 +274,36 @@ while i <= num_sections :
         length_text = len(input_prompt_4_text_body_new)
 
         # Run the model
-        predict_large_language_model_sample(
-            project_id # project
-          , model_id # endpoint_id; this refers to the relevant model
-          , model_temperature # 0.2 # temperature
-          , model_token_limit # 1024 # max_decode_steps
-          , model_top_p # top_p
-          , model_top_k # top_k
-          , f'''{input_prompt}'''
-          , "us-central1" # location
+
+        vertexai.init(
+              project = project_id
+            , location = location_id)
+        parameters = {
+            "temperature": model_temperature,
+            "max_output_tokens": model_token_limit,
+            "top_p": model_top_p,
+            "top_k": model_top_k
+        }
+        model = TextGenerationModel.from_pretrained(model_id)
+        response = model.predict(
+            f'''{input_prompt}''',
+            **parameters
         )
-        llm_response_text = llm_response
+        # print(f"Response from Model: {response.text}")
+
+        llm_response_text = response.text 
+
+        # predict_large_language_model_sample(
+        #     project_id # project
+        #   , model_id # endpoint_id; this refers to the relevant model
+        #   , model_temperature # 0.2 # temperature
+        #   , model_token_limit # 1024 # max_decode_steps
+        #   , model_top_p # top_p
+        #   , model_top_k # top_k
+        #   , f'''{input_prompt}'''
+        #   , "us-central1" # location
+        # )
+        # llm_response_text = llm_response
 
         # if response does not start with bracket, remove text before it
         if "{" in llm_response_text:
@@ -375,7 +368,8 @@ while i <= num_sections :
         st.write(validation_check)
 
         # Append to df using dict
-        df = df.append(df_dict, ignore_index=True)
+        df_row = pd.DataFrame(df_dict, index=[0])
+        df = pd.concat([df, df_row])
         most_recent_row = df.tail(1)
         data_table.add_rows(most_recent_row)
 
