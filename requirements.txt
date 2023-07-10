@@ -1,5 +1,5 @@
 google-cloud-aiplatform
-vertexai
+# vertexai
 seaborn sns
 pandas
 streamlit
