@@ -36,7 +36,7 @@ import datetime, pytz
 import ast
 # Import
 
-# from google.cloud import storage
+from google.cloud import storage
 import seaborn as sns
 
 # Import LLM Model
