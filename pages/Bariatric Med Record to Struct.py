@@ -170,6 +170,7 @@ st.write(':blue[**File ID:**] ' + file_id)
 st.write(':blue[**File Name:**] ' + file_name)
 
 # Download File
+project_id = "cloudadopt"
 bucket_name = "hcls_genai"
 client = storage.Client()
 bucket = client.bucket(bucket_name)
@@ -273,7 +274,7 @@ while i <= num_sections :
 
         # Run the model
         predict_large_language_model_sample(
-            "cloud-llm-preview3" # project
+            project_id # project
           , model_id # endpoint_id; this refers to the relevant model
           , model_temperature # 0.2 # temperature
           , model_token_limit # 1024 # max_decode_steps

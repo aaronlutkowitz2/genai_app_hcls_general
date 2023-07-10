@@ -165,9 +165,11 @@ st.write(':blue[**Prompt 1:**] ')
 llm_prompt_a_display = st.text(input_prompt_a_1_context + input_prompt_a_2_examples + input_prompt_a_3_input + input_prompt_a_4_output)
 llm_prompt_a = input_prompt_a_1_context + input_prompt_a_2_examples + input_prompt_a_3_input + input_prompt_a_4_output
 
+project_id = "cloudadopt"
+
 # Run the first model
 predict_large_language_model_sample(
-    "cloud-llm-preview3" # project
+    project_id # project
   , model_id # endpoint_id; this refers to the relevant model
   , model_temperature # 0.2 # temperature
   , model_token_limit # 1024 # max_decode_steps
