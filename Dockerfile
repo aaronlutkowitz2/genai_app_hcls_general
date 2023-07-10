@@ -13,7 +13,7 @@ RUN pip install -r app/requirements.txt
 
 # mount service account key to docker
 # RUN gcloud auth activate-service-account --key-file=cloudadopt-ef95f1cf8614.json
-# RUN export GOOGLE_APPLICATION_CREDENTIALS="app/cloudadopt-ef95f1cf8614.json"
+RUN export GOOGLE_APPLICATION_CREDENTIALS="app/cloudadopt-b84699a9cb4b.json"
 
 
 #Copy all files in current directory into app directory

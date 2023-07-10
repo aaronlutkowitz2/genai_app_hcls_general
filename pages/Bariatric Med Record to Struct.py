@@ -280,8 +280,7 @@ while i <= num_sections :
           , model_token_limit # 1024 # max_decode_steps
           , model_top_p # top_p
           , model_top_k # top_k
-          , 'What should I have for lunch today?'
-          # , f'''{input_prompt}'''
+          , f'''{input_prompt}'''
           , "us-central1" # location
         )
         llm_response_text = llm_response

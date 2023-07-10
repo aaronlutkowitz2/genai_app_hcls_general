@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "cloudadopt",
+  "private_key_id": "b84699a9cb4bdb6ac273cfeb9c7caa5a12a4a9af",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDV6qtrtoX42Sha\njlR5CkWexh2skJCsk8QHPzA92T1oXXoYMmiZwwHiJleKv98kLSkWbvEypVz15yKh\nmIAvrwWmLBCZ7Wz2jjq4sRDe/JWKWiiS22EmGO8/P6AiY3XJL4XAQcRrg0H0hiYW\nIZ2YbRVsWDGU7k4brg5SoaqZwdjYDEkVjsPZZsg2xmop35t7yzrQH0GXzyIdySX4\nEhzQUdn3TImMHPZpU0GZO8oemgerRZ/6vakp85v5IGUsi0g1HPhfjYX7Of7/uZPc\ng3wEhXm18AG1d9IkGxEF8Un2KfX9jemtd6QAPesLtJRMyo97RzNVSN9lPTDtHbpR\nAQ998z8tAgMBAAECggEAYXiqX0wtw3P/pTORXg3GJ1CSmNzObzRtb/fk3WmtR27A\ngWIGs3ld1FQwM3K2FF/XhvdKRA+BSjLlXsiEMDYJ1uvhLKI4siegriNQUqq44O+v\n6Sq5G4jlCubM6p5zPxa+VRoii/KlDOxLUm5Cxv99cX7GKNxlDsvCjvhHKgRf8CDj\nb8eLON62qbeuw5lWTWI5TqyfdkmjdMZP+CIQ2GmlXRSErwpVyAx+rM6pjJ8zkj3B\n+iSz3ANK8td64gEk+W4JTZC4VgyRt2Mb2V9zsSh0T4kW+He4+1OaLbINPmyx2oH+\n1pJ2JopjBbUx/M984eSJrsGc6oZAn0ipcQSLA/3baQKBgQD1x5mmCGqBh071+4kO\nSZytCPhVCM+yw3ZkkV387UPY7CPrc5dWBQlpMlcnIls/DW6oIBqWKQXTajIjHOu+\nMXidiTDEJGILgpdlnQltJ9cvFatmxF3dfqVGIhCzjvi4N+I8zB5/F5Q0GOsDZH0M\ngwMDblGs6c1upkPvsNx9R84yKwKBgQDez+DBkd+PtF4F2wtRWheXC8TifIFmfCuo\nQxMryCYuYyaLg4kiYstfpuLMjWAy2uaV/PlDyy9SlCgKdmSv72sz1a0i5L2m4gcm\nEL56DPqCCl6lHOb8l8XiMmtFCx8QjI9kComtT2T2/HShMhWjDe0XaEQhzGNEYY1v\nq9YUHl+gBwKBgEFKrxSec7zJNz69faFgCNEm6uGcH6D7r/3zaCaC2V1NDhXEdVWS\nrPdXOjPZOqg7Z0QekzGE4FlTgtI1IqM5/TLMeToB+FHadWG3IAPxa4bEmO4KCG2I\n8Vr6PbmVp5k4r087YnacyvA0FmqmTVn/i9NjgSsQSVS1sqKAN3LImoxVAoGBAJ5A\n384cocEbxrw5/Cvn5WFvBoQnEnGMOCXmnjM2kYfY/IOTBU/bA8AIdIX81BrKx4Q4\njYLNSetJN7dWp+UeE/JZDgP+m4VwfMtYkTF3DmZWnyp/AMDfu7kRPodngsTqUN4p\nbegewAN9BAmJ3TxWo9NAR0QKO2dSMnbigccAW8L5AoGBAIQKRy3plohEAjKfz5QH\nU7pdrdX0OmLeG4tKXgsxEi2lx0QzCtmv8AMSFm657zfD/clmakNADaGTXUHp1wmd\nd5V3jftfcdvMbqeaR8VmfEAdwW/Y/E4wnX3VWzPzzzOh7Mgj91AByRG4y7A2lMOX\nL3KzFRAWYXOvcc4xL3NKLq+k\n-----END PRIVATE KEY-----\n",
+  "client_email": "cloudadopt-test-owner@cloudadopt.iam.gserviceaccount.com",
+  "client_id": "107317583803848683428",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cloudadopt-test-owner%40cloudadopt.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
