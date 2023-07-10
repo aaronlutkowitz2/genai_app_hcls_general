@@ -12,10 +12,10 @@ Creation Date: July 10, 2023
 from google.protobuf import json_format
 from google.protobuf.struct_pb2 import Value
 # from vertexai.preview.language_models import TextGenerationModel
-from google.cloud import aiplatform
-from google.cloud.aiplatform.gapic.schema import predict
-from google.protobuf import json_format
-from google.protobuf.struct_pb2 import Value
+# from google.cloud import aiplatform
+# from google.cloud.aiplatform.gapic.schema import predict
+# from google.protobuf import json_format
+# from google.protobuf.struct_pb2 import Value
 import vertexai
 from vertexai.preview.language_models import TextGenerationModel
 
@@ -36,7 +36,7 @@ import datetime, pytz
 import ast
 # Import
 
-from google.cloud import storage
+# from google.cloud import storage
 import seaborn as sns
 
 # Import LLM Model
