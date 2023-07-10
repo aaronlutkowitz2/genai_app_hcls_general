@@ -6,7 +6,7 @@ EXPOSE 8080
 
 #Copy Requirements.txt file into app directory
 COPY requirements.txt app/requirements.txt
-COPY cloudadopt-ef95f1cf8614.json app/cloudadopt-ef95f1cf8614.json
+# COPY cloudadopt-ef95f1cf8614.json app/cloudadopt-ef95f1cf8614.json
 
 #install all requirements in requirements.txt
 RUN pip install -r app/requirements.txt
