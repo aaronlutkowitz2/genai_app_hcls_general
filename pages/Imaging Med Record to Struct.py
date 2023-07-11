@@ -378,7 +378,7 @@ for indexA, valueA in enumerate(list_of_labels_to_create):
     , 'label_outcome': llm_response_text_b
   }
   df_row = pd.DataFrame(testdict, index=[0])
-  df = pd.concat([df, df_row])
+  df = pd.concat([df, df_row], ignore_index=True)
   # df = df.append(testdict, ignore_index=True)
   most_recent_row = df.tail(1)
   data_table.add_rows(most_recent_row)

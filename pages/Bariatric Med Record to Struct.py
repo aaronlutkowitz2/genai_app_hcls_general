@@ -369,7 +369,7 @@ while i <= num_sections :
 
         # Append to df using dict
         df_row = pd.DataFrame(df_dict, index=[0])
-        df = pd.concat([df, df_row])
+        df = pd.concat([df, df_row], ignore_index=True)
         most_recent_row = df.tail(1)
         data_table.add_rows(most_recent_row)
 
