@@ -47,6 +47,7 @@ st.write('**Purpose**: Hospital needs to know if a patient has ever had a histor
 ################
 
 # Model Inputs
+st.divider
 st.header('1. Model Inputs')
 
 model_id = st.selectbox(
@@ -87,6 +88,7 @@ model_top_p = st.number_input(
 ################
 
 # Prompt Inputs
+st.divider
 st.header('2. Prompt Inputs')
 
 # Goal

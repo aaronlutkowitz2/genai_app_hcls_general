@@ -44,6 +44,7 @@ st.write('**Purpose**: Data science models needs to take in radiologist imaging 
 ################
 
 # Model Inputs
+st.divider
 st.header('1. Model Inputs')
 
 model_id = st.selectbox(
@@ -84,6 +85,7 @@ model_top_p = st.number_input(
 ################
 
 # LLM Model 1 -- Determine List of Labels
+st.divider
 st.header('2. LLM A - Determine List of Labels')
 
 # Body Part
