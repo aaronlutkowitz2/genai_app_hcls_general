@@ -5,48 +5,25 @@ Creation Date: July 10, 2023
 
 @author: Aaron Wilkowitz
 """
-# Import
-import streamlit as st
-# from google.cloud import storage
+
+################
+### import 
+################
+# gcp
 import vertexai
 from vertexai.preview.language_models import TextGenerationModel
+
+# others
+import streamlit as st
 import pandas as pd
 import ast
 from datetime import datetime
 import datetime, pytz
 import seaborn as sns
 
-# # Import LLM Model
-# global llm_response
-# llm_response = 'xyz123'
-
-# def predict_large_language_model_sample(
-#     project_id: str,
-#     model_name: str,
-#     temperature: float,
-#     max_decode_steps: int,
-#     top_p: float,
-#     top_k: int,
-#     content: str,
-#     location: str = "us-central1",
-#     tuned_model_name: str = "",
-#     ) :
-#     """Predict using a Large Language Model."""
-#     vertexai.init(project=project_id, location=location)
-#     model = TextGenerationModel.from_pretrained(model_name)
-#     if tuned_model_name:
-#       model = model.get_tuned_model(tuned_model_name)
-#     response = model.predict(
-#         content,
-#         temperature=temperature,
-#         max_output_tokens=max_decode_steps,
-#         top_k=top_k,
-#         top_p=top_p,)
-
-#     ## Create global llm_response & set it equal to content
-#     global llm_response
-#     llm_response = 'xyz456'
-#     llm_response = response.text
+################
+### page intro
+################
 
 # Make page wide
 st.set_page_config(
@@ -61,6 +38,10 @@ st.title('GCP HCLS GenAI Demo: Medical Imaging -- Data Science Labels')
 st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 st.write('**Date**: 2023-06-22')
 st.write('**Purpose**: Data science models needs to take in radiologist imaging summary & convert that to many yes/no labels for data science training.')
+
+################
+### model inputs
+################
 
 # Model Inputs
 st.header('1. Model Inputs')
@@ -97,6 +78,10 @@ model_top_p = st.number_input(
     , max_value = 1.0
     , value = 0.8
   )
+
+################
+### LLM A
+################
 
 # LLM Model 1 -- Determine List of Labels
 st.header('2. LLM A - Determine List of Labels')
@@ -187,22 +172,13 @@ response = model.predict(
 
 llm_response_text_a = response.text
 
-
-# predict_large_language_model_sample(
-#     project_id # project
-#   , model_id # endpoint_id; this refers to the relevant model
-#   , model_temperature # 0.2 # temperature
-#   , model_token_limit # 1024 # max_decode_steps
-#   , model_top_p # top_p
-#   , model_top_k # top_k
-#   , f'''{llm_prompt_a}'''
-#   , "us-central1" # location
-# )
-# llm_response_text_a = llm_response
-
 st.write(':blue[**List of Labels:**] ' + llm_response_text_a)
 
 st.divider()
+
+################
+### LLM B
+################
 
 # LLM Model 2 -- Create binary labels
 st.header('3. LLM B - Create binary label based on Medical Text')
@@ -320,9 +296,19 @@ st.write(':blue[**File Text:**] ' + file_text)
 # Convert comma separated list into list
 list_of_labels_to_create = llm_response_text_a.split(',')
 
+################
+### LLM B Output
+################
+
 # Create dataframe & start loop
-df = pd.DataFrame()
-data_table = st.table(df)
+# note: must do this step b/c data_tables function doesn't work on streamlit when on cloud run, not sure why
+fake_data = {
+      'label_name' : '.'
+    , 'label_outcome' : '.'
+}
+df_fake_schema = pd.DataFrame(fake_data, index=[0])
+data_table = st.table(df_fake_schema)
+
 for indexA, valueA in enumerate(list_of_labels_to_create):
   input_prompt_b_1_context = '''You are an expert in medical imaging. Below is a yes or no question, followed by a radiologist's imaging summary.
 
@@ -358,8 +344,26 @@ for indexA, valueA in enumerate(list_of_labels_to_create):
 
   llm_response_text_b = response.text
 
+  # Create dataframe
+  testdict = {
+      'label_name': list_of_labels_to_create[indexA]
+    , 'label_outcome': llm_response_text_b
+  }
+  # Append to df using dict
+  df_row = pd.DataFrame(testdict, index=[0])
+  data_table.add_rows(df_row)
 
-  # # Run the second model
+
+# df = pd.DataFrame()
+# data_table = st.table(df)
+
+  # df_row = pd.DataFrame(testdict, index=[0])
+  # df = pd.concat([df, df_row], ignore_index=True)
+  # # df = df.append(testdict, ignore_index=True)
+  # most_recent_row = df.tail(1)
+  # data_table.add_rows(most_recent_row)
+
+    # # Run the second model
   # predict_large_language_model_sample(
   #     project_id # project
   #   , model_id # endpoint_id; this refers to the relevant model
@@ -372,13 +376,47 @@ for indexA, valueA in enumerate(list_of_labels_to_create):
   # )
   # llm_response_text_b = llm_response
 
-  # Create dataframe
-  testdict = {
-      'label_name': list_of_labels_to_create[indexA]
-    , 'label_outcome': llm_response_text_b
-  }
-  df_row = pd.DataFrame(testdict, index=[0])
-  df = pd.concat([df, df_row], ignore_index=True)
-  # df = df.append(testdict, ignore_index=True)
-  most_recent_row = df.tail(1)
-  data_table.add_rows(most_recent_row)
+  # predict_large_language_model_sample(
+#     project_id # project
+#   , model_id # endpoint_id; this refers to the relevant model
+#   , model_temperature # 0.2 # temperature
+#   , model_token_limit # 1024 # max_decode_steps
+#   , model_top_p # top_p
+#   , model_top_k # top_k
+#   , f'''{llm_prompt_a}'''
+#   , "us-central1" # location
+# )
+# llm_response_text_a = llm_response
+
+
+# # Import LLM Model
+# global llm_response
+# llm_response = 'xyz123'
+
+# def predict_large_language_model_sample(
+#     project_id: str,
+#     model_name: str,
+#     temperature: float,
+#     max_decode_steps: int,
+#     top_p: float,
+#     top_k: int,
+#     content: str,
+#     location: str = "us-central1",
+#     tuned_model_name: str = "",
+#     ) :
+#     """Predict using a Large Language Model."""
+#     vertexai.init(project=project_id, location=location)
+#     model = TextGenerationModel.from_pretrained(model_name)
+#     if tuned_model_name:
+#       model = model.get_tuned_model(tuned_model_name)
+#     response = model.predict(
+#         content,
+#         temperature=temperature,
+#         max_output_tokens=max_decode_steps,
+#         top_k=top_k,
+#         top_p=top_p,)
+
+#     ## Create global llm_response & set it equal to content
+#     global llm_response
+#     llm_response = 'xyz456'
+#     llm_response = response.text

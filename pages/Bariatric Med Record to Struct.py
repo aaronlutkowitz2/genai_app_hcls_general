@@ -6,70 +6,27 @@ Creation Date: July 10, 2023
 @author: Aaron Wilkowitz
 """
 
+################
+### import 
+################
 # gcp 
-# from google.cloud import aiplatform
-# from google.cloud.aiplatform.gapic.schema import predict
 from google.protobuf import json_format
 from google.protobuf.struct_pb2 import Value
-# from vertexai.preview.language_models import TextGenerationModel
-# from google.cloud import aiplatform
-# from google.cloud.aiplatform.gapic.schema import predict
-# from google.protobuf import json_format
-# from google.protobuf.struct_pb2 import Value
 import vertexai
 from vertexai.language_models import TextGenerationModel
+from google.cloud import storage
 
 # others 
 import streamlit as st
 import pandas as pd
-
-# import datetime
 from datetime import datetime
 import datetime, pytz
-
-# # autenticating to google
-# auth.authenticate_user()
-# creds, _ = default()
-# gc = gspread.authorize(creds)
-
-# import ast (str to dict)
 import ast
-# Import
-
-from google.cloud import storage
 import seaborn as sns
 
-# # Import LLM Model
-# global llm_response
-# llm_response = 'xyz123'
-
-# def predict_large_language_model_sample(
-#     project_id: str,
-#     model_name: str,
-#     temperature: float,
-#     max_decode_steps: int,
-#     top_p: float,
-#     top_k: int,
-#     content: str,
-#     location: str = "us-central1",
-#     tuned_model_name: str = "",
-#     ) :
-#     """Predict using a Large Language Model."""
-#     vertexai.init(project=project_id, location=location)
-#     model = TextGenerationModel.from_pretrained(model_name)
-#     if tuned_model_name:
-#       model = model.get_tuned_model(tuned_model_name)
-#     response = model.predict(
-#         content,
-#         temperature=temperature,
-#         max_output_tokens=max_decode_steps,
-#         top_k=top_k,
-#         top_p=top_p,)
-
-#     ## Create global llm_response & set it equal to content
-#     global llm_response
-#     llm_response = 'xyz456'
-#     llm_response = response.text
+################
+### page intro
+################
 
 # Make page wide
 st.set_page_config(
@@ -84,6 +41,10 @@ st.title('GCP HCLS GenAI Demo: CCDA Bariatrics Use Case')
 st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 st.write('**Date**: 2023-06-21')
 st.write('**Purpose**: Hospital needs to know if a patient has ever had a history of bariatric surgery at another hospital system, by reviewing a patient\'s CCDA document.')
+
+################
+### model inputs
+################
 
 # Model Inputs
 st.header('1. Model Inputs')
@@ -120,6 +81,10 @@ model_top_p = st.number_input(
     , max_value = 1.0
     , value = 0.8
   )
+
+################
+### prompt inputs
+################
 
 # Prompt Inputs
 st.header('2. Prompt Inputs')
@@ -223,15 +188,31 @@ else:
 
 num_sections = blob.count(section_divider_start)+1
 
+################
+### LLM Output
+################
+
 # Loop -- outputs
 st.header('3. LLM Output')
 
 # Set df
-df = pd.DataFrame()
-data_table = st.table(df)
+
+# note: must do this step b/c data_tables function doesn't work on streamlit when on cloud run, not sure why
+fake_data = {
+      'section' : '.'
+    , 'llm_response' : '.'
+    , 'binary' : '.'
+    , 'evidence' : '.'
+    , 'code' : '.'
+    , 'code_system' : '.'
+}
+df_fake_schema = pd.DataFrame(fake_data, index=[0])
+data_table = st.table(df_fake_schema)
 
 # Start loop
 i = 1
+
+# while i <= 3: 
 while i <= num_sections :
 
   # Generate text
@@ -293,18 +274,6 @@ while i <= num_sections :
 
         llm_response_text = response.text 
 
-        # predict_large_language_model_sample(
-        #     project_id # project
-        #   , model_id # endpoint_id; this refers to the relevant model
-        #   , model_temperature # 0.2 # temperature
-        #   , model_token_limit # 1024 # max_decode_steps
-        #   , model_top_p # top_p
-        #   , model_top_k # top_k
-        #   , f'''{input_prompt}'''
-        #   , "us-central1" # location
-        # )
-        # llm_response_text = llm_response
-
         # if response does not start with bracket, remove text before it
         if "{" in llm_response_text:
           char_start = llm_response_text.find('{')
@@ -320,7 +289,7 @@ while i <= num_sections :
 
         llm_response_binary = llm_response_dict['binary']
         llm_response_evidence = llm_response_dict['evidence']
-        llm_response_code = llm_response_dict['code']
+        llm_response_code = str(llm_response_dict['code'])
         llm_response_code_system =  llm_response_dict['code_system']
 
         if llm_response_binary == 'yes' and 'snomed' in llm_response_code_system.lower() and llm_response_code == '18692006':
@@ -345,8 +314,8 @@ while i <= num_sections :
             , 'evidence': llm_response_evidence
             , 'code': llm_response_code
             , 'code_system': llm_response_code_system
-            # , 'valid_check': valid_check
-            # , 'display_name': display_name
+            , 'valid_check': valid_check
+            , 'display_name': display_name
         }
 
         # Write out full response
@@ -366,12 +335,106 @@ while i <= num_sections :
 
         st.write(response_format)
         st.write(validation_check)
-
+      
         # Append to df using dict
         df_row = pd.DataFrame(df_dict, index=[0])
-        df = pd.concat([df, df_row], ignore_index=True)
-        most_recent_row = df.tail(1)
-        data_table.add_rows(most_recent_row)
+        data_table.add_rows(df_row)
 
   # Loop through again
   i += 1
+
+
+        # df = pd.concat([df, df_row], ignore_index=True)
+
+        # st.divider()
+        # st.write('DF Row ')
+        # st.write(df_row)
+        # st.divider()
+
+        # st.divider()
+        # st.write('DF ')
+        # st.write(df)
+        # st.divider()
+
+          # df_index = pd(df, index[0])
+
+        # st.divider()
+        # st.write('Most recent row')
+        # st.write(most_recent_row)
+        # st.divider()
+
+        # most_recent_row = df_index.tail(1)
+
+        # st.divider()
+        # st.write('Most recent row')
+        # st.write(most_recent_row)
+        # st.divider()
+
+        # st.divider()
+        # st.write('Response Text ' + llm_response_text)
+        # st.divider()
+
+
+        # predict_large_language_model_sample(
+        #     project_id # project
+        #   , model_id # endpoint_id; this refers to the relevant model
+        #   , model_temperature # 0.2 # temperature
+        #   , model_token_limit # 1024 # max_decode_steps
+        #   , model_top_p # top_p
+        #   , model_top_k # top_k
+        #   , f'''{input_prompt}'''
+        #   , "us-central1" # location
+        # )
+        # llm_response_text = llm_response
+
+
+
+# # Import LLM Model
+# global llm_response
+# llm_response = 'xyz123'
+
+# def predict_large_language_model_sample(
+#     project_id: str,
+#     model_name: str,
+#     temperature: float,
+#     max_decode_steps: int,
+#     top_p: float,
+#     top_k: int,
+#     content: str,
+#     location: str = "us-central1",
+#     tuned_model_name: str = "",
+#     ) :
+#     """Predict using a Large Language Model."""
+#     vertexai.init(project=project_id, location=location)
+#     model = TextGenerationModel.from_pretrained(model_name)
+#     if tuned_model_name:
+#       model = model.get_tuned_model(tuned_model_name)
+#     response = model.predict(
+#         content,
+#         temperature=temperature,
+#         max_output_tokens=max_decode_steps,
+#         top_k=top_k,
+#         top_p=top_p,)
+
+#     ## Create global llm_response & set it equal to content
+#     global llm_response
+#     llm_response = 'xyz456'
+#     llm_response = response.text
+
+
+# from vertexai.preview.language_models import TextGenerationModel
+# from google.cloud import aiplatform
+# from google.cloud.aiplatform.gapic.schema import predict
+# from google.protobuf import json_format
+# from google.protobuf.struct_pb2 import Value
+
+
+# from google.cloud import aiplatform
+# from google.cloud.aiplatform.gapic.schema import predict
+
+# # autenticating to google
+# auth.authenticate_user()
+# creds, _ = default()
+# gc = gspread.authorize(creds)
+
+# df = pd.DataFrame()
