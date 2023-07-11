@@ -6,14 +6,9 @@ EXPOSE 8080
 
 #Copy Requirements.txt file into app directory
 COPY requirements.txt app/requirements.txt
-COPY cloudadopt-test-genai-real.json app/cloudadopt-test-genai-real.json
 
 #install all requirements in requirements.txt
 RUN pip install -r app/requirements.txt
-
-# mount service account key to docker
-# RUN gcloud auth activate-service-account --key-file=cloudadopt-ef95f1cf8614.json
-RUN export GOOGLE_APPLICATION_CREDENTIALS="app/cloudadopt-test-genai-real.json"
 
 #Copy all files in current directory into app directory
 COPY . /app
@@ -24,6 +19,14 @@ WORKDIR /app
 #Run the application on port 8080
 ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]
 
+
+## Graveyard
+
+# COPY cloudadopt-test-genai-real.json app/cloudadopt-test-genai-real.json
+
+# mount service account key to docker
+# RUN gcloud auth activate-service-account --key-file=cloudadopt-ef95f1cf8614.json
+# RUN export GOOGLE_APPLICATION_CREDENTIALS="app/cloudadopt-test-genai-real.json"
 
 # COPY cloudadopt-ef95f1cf8614.json app/cloudadopt-ef95f1cf8614.json
 # RUN apt-get -y update
