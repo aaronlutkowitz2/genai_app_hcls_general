@@ -6,5 +6,6 @@ pandas
 streamlit
 datetime
 pytz
+looker_sdk
 # ast
 
