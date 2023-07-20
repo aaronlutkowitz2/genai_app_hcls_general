@@ -194,10 +194,10 @@ body=query_body
 )
 
 st.write(':blue[**SQL Query:**] ')
-st.write(query_sql)
+st.text(query_sql)
 
 st.write(':blue[**Patient Information:**] ')
-st.write(query_json)
+st.text(query_json)
 
 ################
 ### LLM Prompt
@@ -212,8 +212,8 @@ param_goal = st.selectbox(
     'What do you want to know about the patient?'
     , (
           'Write a 3 sentence summary of the patient'
-        , 'Write a 3 sentence summary of the patient in Spanish'
-        , 'Write a 3 sentence summary of the patient, explain like the reader is 5 years old'
+        , 'When was the patient admitted?'
+        , 'What hospital was the patient admitted to?'
         , 'custom'
       )
     , index = 0
