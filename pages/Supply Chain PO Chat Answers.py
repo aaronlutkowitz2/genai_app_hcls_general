@@ -159,3 +159,54 @@ response = chat.send_message(custom_prompt, **parameters)
 # print(f"Response from Model: {response.text}")
 llm_response_text = response.text 
 st.write(':blue[**LLM Response:**] ' + llm_response_text)
+
+################
+### LLM JSON Converter
+################
+
+# Prompt Inputs
+st.divider()
+st.header('4. LLM JSON Converter')
+
+instructions_text = """ 
+You are an expert at writing json correctly. Please write a JSON blob out of the below document. Use correct json syntax.
+
+"""
+
+document_text = blob
+
+# st.write(':blue[**Instructions:**] ')
+# st.text(instructions_text)
+# st.write(':blue[**Documentation:**] ')
+# st.text(document_text)
+# st.divider()
+
+input_prompt = instructions_text + document_text
+st.write(':blue[**LLM Prompt:**] ')
+st.text(input_prompt)
+
+st.divider()
+
+model_id = "text-bison@001"
+model_token_limit = 1024
+
+# Run the model
+vertexai.init(
+      project = project_id
+    , location = location_id)
+parameters = {
+    "temperature": model_temperature,
+    "max_output_tokens": model_token_limit,
+    "top_p": model_top_p,
+    "top_k": model_top_k
+}
+model = TextGenerationModel.from_pretrained(model_id)
+response = model.predict(
+    f'''{input_prompt}''',
+    **parameters
+)
+# print(f"Response from Model: {response.text}")
+
+llm_response_text = response.text 
+st.write(':blue[**LLM Output:**]')
+st.text(llm_response_text)
