@@ -1,5 +1,6 @@
 google-cloud-aiplatform
 google-cloud-storage
+google-cloud-bigquery
 vertexai
 seaborn
 pandas
@@ -7,5 +8,26 @@ streamlit
 datetime
 pytz
 looker_sdk
-# ast
 
+langchain
+# langchain==0.0.191
+google-cloud-core
+SQLAlchemy
+sqlalchemy-bigquery
+
+
+
+
+
+# db-dtypes
+# pandas-gbq
+# bardapi
+# bardapi==0.1.3
+# git+https://github.com/dsdanielpark/Bard-API.git
+
+# google-cloud-bigquery[pandas]
+# google-cloud-bigquery[pandas]==2.34.3
+# ast
+# db-dtypes==1.1.1
+# pandas==1.3.2
+# pandas-profiling # ==3.4.0
