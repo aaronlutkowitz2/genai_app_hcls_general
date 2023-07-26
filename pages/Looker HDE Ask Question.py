@@ -99,6 +99,7 @@ st.divider()
 st.header('2. Looker Inputs')
 
 looker_sdk_base_url = "https://demoexpo.cloud.looker.com:19999"
+looker_env_str = "demoexpo"
 os.environ["LOOKERSDK_BASE_URL"] = looker_sdk_base_url #If your looker URL has .cloud in it (hosted on GCP), do not include :19999 (ie: https://your.cloud.looker.com).
 os.environ["LOOKERSDK_API_VERSION"] = "4.0" #3.1 is the default version. You can change this to 4.0 if you want.
 os.environ["LOOKERSDK_VERIFY_SSL"] = "true" #Defaults to true if not set. SSL verification should generally be on unless you have a real good reason not to use it. Valid options: true, y, t, yes, 1.
@@ -112,7 +113,7 @@ os.environ["LOOKERSDK_CLIENT_SECRET"] = "vkthnv8GJzHgQgnGjZVny2zF" #No defaults.
 
 sdk = looker_sdk.init40()
 
-st.write(':blue[**Looker URL:**] ' + looker_sdk_base_url)
+st.write(':blue[**Looker Instance:**] ' + looker_env_str)
 st.write(':green[**Looker Environment Ready**]')
 
 patient_name = st.selectbox(
