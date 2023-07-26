@@ -8,10 +8,12 @@ streamlit
 datetime
 pytz
 looker_sdk
--U --no-dependencies langchain
+# langchain
 google-cloud-core
 SQLAlchemy
 sqlalchemy-bigquery
+pyyaml
+pydantic
 
 
 
@@ -32,3 +34,4 @@ sqlalchemy-bigquery
 
 # langchain
 # langchain==0.0.191
+# -U --no-dependencies langchain
