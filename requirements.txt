@@ -8,9 +8,7 @@ streamlit
 datetime
 pytz
 looker_sdk
-
-langchain
-# langchain==0.0.191
+-U --no-dependencies langchain
 google-cloud-core
 SQLAlchemy
 sqlalchemy-bigquery
@@ -31,3 +29,6 @@ sqlalchemy-bigquery
 # db-dtypes==1.1.1
 # pandas==1.3.2
 # pandas-profiling # ==3.4.0
+
+# langchain
+# langchain==0.0.191
