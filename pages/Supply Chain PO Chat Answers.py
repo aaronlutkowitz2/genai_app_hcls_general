@@ -19,6 +19,7 @@ from google.cloud import storage
 
 # others 
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 from datetime import datetime
 import datetime, pytz
@@ -42,6 +43,12 @@ st.title('GCP HCLS GenAI Demo: Supply Chain PO Order - Q&A')
 st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 st.write('**Date**: 2023-07-11')
 st.write('**Purpose**: Hospital has many supply chain PO orders. They need to ask questions against the order')
+
+# Model Inputs
+st.divider()
+st.header('Intro')
+
+components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vTO0Fl_ccAxfXAAZnKSjFz8eybLDpAKgO3VSR6DpZ7XPY8G83mqdwP6kRxdriQv5pitXIxsVchYFiwD/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
 ################
 ### model inputs

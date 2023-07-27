@@ -15,6 +15,7 @@ from vertexai.preview.language_models import TextGenerationModel
 
 # others
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import ast
 from datetime import datetime
@@ -38,6 +39,12 @@ st.title('GCP HCLS GenAI Demo: Medical Imaging -- Data Science Labels')
 st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 st.write('**Date**: 2023-06-22')
 st.write('**Purpose**: Data science models needs to take in radiologist imaging summary & convert that to many yes/no labels for data science training.')
+
+# Model Inputs
+st.divider()
+st.header('Intro')
+
+components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vT-l1SQEqf6DrvlDMT_YhULvY74U1SnVCyfC7EVgXt2bPN4c6bejjPb0GeNjt4SHnz3v0t4SHjM-S-9/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
 ################
 ### model inputs

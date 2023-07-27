@@ -25,6 +25,7 @@ from sqlalchemy.engine import create_engine
 from sqlalchemy.schema import *
 
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import db_dtypes 
 import ast
@@ -51,6 +52,12 @@ st.title('GCP HCLS GenAI Demo: Write a BigQuery SQL Query')
 st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 st.write('**Date**: 2023-07-24')
 st.write('**Purpose**: You need to ask a question of your data. Have GenAI generate a query in BigQuery')
+
+# Model Inputs
+st.divider()
+st.header('Intro')
+
+components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vSmJtHbzCDJsxgrrrcWHkFOtC5PkqKGBwaDmygKiinn0ljyXQ0Xaxzg4mBp2mhLzYaXuSzs_2UowVwe/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
 ################
 ### model inputs

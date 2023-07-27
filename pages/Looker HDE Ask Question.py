@@ -16,6 +16,7 @@ from vertexai.preview.language_models import ChatModel, InputOutputTextPair
 
 # others
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import ast
 from datetime import datetime
@@ -48,6 +49,12 @@ st.title('GCP HCLS GenAI Demo: HDE Looker GenAI Demo')
 st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 st.write('**Date**: 2023-06-22')
 st.write('**Purpose**: Show how a user can pull up a FHIR record from a Looker API call, then use GenAI to ask a question about the patient.')
+
+# Model Inputs
+st.divider()
+st.header('Intro')
+
+components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vRE3vXvZ2c3HuqnXVU276wYSnwHnm_kuXWy0Jr4WrI74u3zgwGu3sMzrIOzhSyreHaSe2m-eGyn0odY/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
 ################
 ### model inputs

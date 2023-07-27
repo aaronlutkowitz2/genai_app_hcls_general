@@ -18,6 +18,7 @@ from google.cloud import storage
 
 # others 
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 from datetime import datetime
 import datetime, pytz
@@ -41,6 +42,12 @@ st.title('GCP HCLS GenAI Demo: CCDA Bariatrics Use Case')
 st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 st.write('**Date**: 2023-06-21')
 st.write('**Purpose**: Hospital needs to know if a patient has ever had a history of bariatric surgery at another hospital system, by reviewing a patient\'s CCDA document.')
+
+# Model Inputs
+st.divider()
+st.header('Intro')
+
+components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vReakjnURU_wVvwaXcUHURyHGU0xbCN22oO6KzHw2zh4EElxbOkNEtvNKFY9_O00K0Jn787gskMZ4MB/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
 ################
 ### model inputs
