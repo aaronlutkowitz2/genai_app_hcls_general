@@ -50,6 +50,10 @@ st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 st.write('**Date**: 2023-06-22')
 st.write('**Purpose**: Show how a user can pull up a FHIR record from a Looker API call, then use GenAI to ask a question about the patient.')
 
+# Gitlink
+st.write('**Go Link (Googlers)**: go/hclsgenai')
+st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
+
 # Model Inputs
 st.divider()
 st.header('Intro')

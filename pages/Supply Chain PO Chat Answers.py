@@ -44,6 +44,10 @@ st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 st.write('**Date**: 2023-07-11')
 st.write('**Purpose**: Hospital has many supply chain PO orders. They need to ask questions against the order')
 
+# Gitlink
+st.write('**Go Link (Googlers)**: go/hclsgenai')
+st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
+
 # Model Inputs
 st.divider()
 st.header('Intro')

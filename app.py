@@ -22,3 +22,7 @@ st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 
 # Get started
 st.header('Click on a demo on the left hand side to get started')
+
+# Gitlink
+st.write('**Go Link (Googlers)**: go/hclsgenai')
+st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')

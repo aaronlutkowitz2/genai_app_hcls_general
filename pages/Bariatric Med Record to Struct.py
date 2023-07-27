@@ -43,6 +43,10 @@ st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 st.write('**Date**: 2023-06-21')
 st.write('**Purpose**: Hospital needs to know if a patient has ever had a history of bariatric surgery at another hospital system, by reviewing a patient\'s CCDA document.')
 
+# Gitlink
+st.write('**Go Link (Googlers)**: go/hclsgenai')
+st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
+
 # Model Inputs
 st.divider()
 st.header('Intro')
