@@ -9,7 +9,7 @@ COPY requirements.txt app/requirements.txt
 
 #install all requirements in requirements.txt
 RUN pip install -r app/requirements.txt
-RUN pip install --no-dependencies langchain
+RUN pip install --no-dependencies langchain==0.0.242
 # RUN pip3 install aiohttp
 
 #Copy all files in current directory into app directory

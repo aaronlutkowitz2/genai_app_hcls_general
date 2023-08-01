@@ -48,9 +48,22 @@ st.write('**Purpose**: Hospital has many supply chain PO orders. They need to as
 st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
-# Model Inputs
+# Video
 st.divider()
-st.header('Intro')
+st.header('30 Second Video')
+
+default_width = 80 
+ratio = 1
+width = max(default_width, 0.01)
+side = max((100 - width) / ratio, 0.01)
+
+_, container, _ = st.columns([side, width, side])
+container.video(data='https://youtu.be/VovFVC3pUWM')
+
+# Architecture
+
+st.divider()
+st.header('Architecture')
 
 components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vTO0Fl_ccAxfXAAZnKSjFz8eybLDpAKgO3VSR6DpZ7XPY8G83mqdwP6kRxdriQv5pitXIxsVchYFiwD/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 

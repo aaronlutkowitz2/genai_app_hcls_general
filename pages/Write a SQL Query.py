@@ -57,9 +57,22 @@ st.write('**Purpose**: You need to ask a question of your data. Have GenAI gener
 st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
-# Model Inputs
+# Video
 st.divider()
-st.header('Intro')
+st.header('30 Second Video')
+
+default_width = 80 
+ratio = 1
+width = max(default_width, 0.01)
+side = max((100 - width) / ratio, 0.01)
+
+_, container, _ = st.columns([side, width, side])
+container.video(data='https://youtu.be/NxlaDk6UYN4')
+
+# Architecture
+
+st.divider()
+st.header('Architecture')
 
 components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vSmJtHbzCDJsxgrrrcWHkFOtC5PkqKGBwaDmygKiinn0ljyXQ0Xaxzg4mBp2mhLzYaXuSzs_2UowVwe/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 

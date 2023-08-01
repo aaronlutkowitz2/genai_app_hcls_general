@@ -44,9 +44,22 @@ st.write('**Purpose**: Data science models needs to take in radiologist imaging 
 st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
-# Model Inputs
+# Video
 st.divider()
-st.header('Intro')
+st.header('30 Second Video')
+
+default_width = 80 
+ratio = 1
+width = max(default_width, 0.01)
+side = max((100 - width) / ratio, 0.01)
+
+_, container, _ = st.columns([side, width, side])
+container.video(data='https://youtu.be/AtVCwywl_q8')
+
+# Architecture
+
+st.divider()
+st.header('Architecture')
 
 components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vT-l1SQEqf6DrvlDMT_YhULvY74U1SnVCyfC7EVgXt2bPN4c6bejjPb0GeNjt4SHnz3v0t4SHjM-S-9/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
