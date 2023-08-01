@@ -47,9 +47,22 @@ st.write('**Purpose**: Hospital needs to know if a patient has ever had a histor
 st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
-# Model Inputs
+# Video
 st.divider()
-st.header('Intro')
+st.header('30 Second Video')
+
+default_width = 80 
+ratio = 1
+width = max(default_width, 0.01)
+side = max((100 - width) / ratio, 0.01)
+
+_, container, _ = st.columns([side, width, side])
+container.video(data='https://youtu.be/oWHL3AOMZS0')
+
+# Architecture
+
+st.divider()
+st.header('Architecture')
 
 components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vReakjnURU_wVvwaXcUHURyHGU0xbCN22oO6KzHw2zh4EElxbOkNEtvNKFY9_O00K0Jn787gskMZ4MB/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
