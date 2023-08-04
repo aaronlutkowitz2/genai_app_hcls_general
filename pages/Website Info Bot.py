@@ -97,10 +97,11 @@ st.write("Session Path " + session_path)
 # print(f"Session path: {session_path}\n")
 
 # client_options = None
-json_file_path = '/Users/aaronwilkowitz/Documents/hcls_work/genai_app_hcls_general/keys/gbot-test-071-ac2f21641848.json'
-client_options = ClientOptions(
-    credentials_file=json_file_path
-  )
+# json_file_path = '/Users/aaronwilkowitz/Documents/hcls_work/genai_app_hcls_general/keys/gbot-test-071-ac2f21641848.json'
+client_options = None 
+# ClientOptions(
+#     credentials_file=json_file_path
+#   )
 agent_components = AgentsClient.parse_agent_path(agent)
 location_id = agent_components["location"]
 if location_id != "global":

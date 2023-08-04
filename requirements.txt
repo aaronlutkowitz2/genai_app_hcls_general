@@ -6,6 +6,7 @@ google-cloud-core==2.3.3
 vertexai==0.0.1
 looker_sdk==0.1.3b20
 google-cloud-dialogflow-cx==1.21.0
+gcsfs==2023.6.0
 
 ### langchain ###
 # langchain
@@ -29,6 +30,8 @@ pytz==2020.1
 Flask==2.2.2
 python-dateutil==2.8.2
 functions-framework==3.3.0
+# image==1.5.33
+image-encoder==0.0.8
 
 
 
