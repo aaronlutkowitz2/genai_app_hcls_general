@@ -11,7 +11,7 @@ Creation Date: July 10, 2023
 
 # 1. Downloaded CBIS-DDSM dataset: https://www.kaggle.com/datasets/awsaf49/cbis-ddsm-breast-cancer-image-dataset
 # 2. Uploaded those files to public GCS bucket: hcls_genai/hcls/dicom  
-# 3. Ran I sql
+# 3. Ran I ran the first section of this sql script: https://github.com/aaronlutkowitz2/genai_app_hcls_general/blob/main/non_python_code/mammogram/load_dicom_data.sql -- this produces a list of gcs_image_path and metadata
 
 
 
