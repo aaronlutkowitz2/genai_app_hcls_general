@@ -11,9 +11,15 @@ Creation Date: July 10, 2023
 
 # 1. Downloaded CBIS-DDSM dataset: https://www.kaggle.com/datasets/awsaf49/cbis-ddsm-breast-cancer-image-dataset
 # 2. Uploaded those files to public GCS bucket: hcls_genai/hcls/dicom  
-# 3. Ran I ran the first section of this sql script: https://github.com/aaronlutkowitz2/genai_app_hcls_general/blob/main/non_python_code/mammogram/load_dicom_data.sql -- this produces a list of gcs_image_path and metadata
-
-
+# 3. Ran I ran the first section of this sql script: https://github.com/aaronlutkowitz2/genai_app_hcls_general/blob/main/non_python_code/mammogram/load_dicom_data.sql 
+  #  -- this script produces a list of image_id, gcs_image_path, and metadata
+# 4. Created vectors for every row in that table -- see the bottom of the script with a section called "### APPENDIX: create embeddings"
+  #  -- inserted those vectors into cloudadopt.dicom_mammography.image_model_embedding
+# 5. Ran section section of this sql script: https://github.com/aaronlutkowitz2/genai_app_hcls_general/blob/main/non_python_code/mammogram/load_dicom_data.sql 
+  #  -- this calcs similarity scores from every image to every other image (using dot products)
+  #  -- note: we also use dot product ^ 10 and dot product ^ 100 b/c the similiarity scores are so similar, we wanted to create more differentiation
+  #  -- Eventually, we get to `cloudadopt.dicom_mammography.image_model_input_4` (wide) and `cloudadopt.dicom_mammography.image_model_input_5` (long), which we use in the scripts below
+# In the demo, we "pre-baked" / pre-uploaded 3 images to run through, but you could easily code this to upload a brand new image, vectorize it, & run through the same process
 
 ################
 ### import 
@@ -502,27 +508,8 @@ st.write('The model struggles with subtlety - its predictions do not strongly co
 source_url = 'https://demoexpo.cloud.looker.com/embed/public/GW3vVFKJxKdWpTBqQX7MQTbfXsKwkQNt'
 show_looker_look(source_url)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ################
-### create embeddings -- one time to generate embeddings on all images
+### APPENDIX: create embeddings -- one time to generate embeddings on all images
 ################
 
 #### One time process: run all 500 embeddings on the images
