@@ -5,6 +5,15 @@ Creation Date: July 10, 2023
 
 @author: Aaron Wilkowitz
 """
+################
+### notes on how to replicate this
+################
+
+# 1. Downloaded CBIS-DDSM dataset: https://www.kaggle.com/datasets/awsaf49/cbis-ddsm-breast-cancer-image-dataset
+# 2. Uploaded those files to public GCS bucket: hcls_genai/hcls/dicom  
+# 3. Ran I sql
+
+
 
 ################
 ### import 
@@ -33,7 +42,7 @@ import typing
 import csv
 import numpy as np
 from IPython.display import Image
-from image_encoder.image_encoder import *
+# from image_encoder.image_encoder import *
 
 ################
 ### page intro
@@ -59,7 +68,7 @@ st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_gen
 
 # Video
 st.divider()
-st.header('30 Second Video')
+st.header('60 Second Video')
 
 default_width = 80 
 ratio = 1
@@ -67,14 +76,14 @@ width = max(default_width, 0.01)
 side = max((100 - width) / ratio, 0.01)
 
 _, container, _ = st.columns([side, width, side])
-# container.video(data='https://youtu.be/AtVCwywl_q8')
+container.video(data='https://youtu.be/b7JXKP2-dFQ')
 
 # Architecture
 
 st.divider()
 st.header('Architecture')
 
-# components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vT-l1SQEqf6DrvlDMT_YhULvY74U1SnVCyfC7EVgXt2bPN4c6bejjPb0GeNjt4SHnz3v0t4SHjM-S-9/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
+components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vSC37AXlqWdajZZhnK25SVWOhZIGzFX9HZ90hMdqTkwRx6I7vD1v7SNCTL3AStKA2tmDm1uzcW5v2Dx/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
 ################
 ### select patient
@@ -93,17 +102,34 @@ patient_select = st.selectbox(
   )
 
 if "15" in patient_select:
-  patient_id = 15
-  image_url = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/id15_benign.jpg'
+    patient_id = 15
+    image_url = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/id15_benign.jpg'
+    image_url_nearest1 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/15_nearest1_id8.jpg'
+    image_url_nearest2 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/15_nearest2_id480.jpg'
+    image_url_nearest3 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/15_nearest3_id287.jpg'
+    image_file_name = 'hcls/dicom/jpeg/file4/1.3.6.1.4.1.9590.100.1.2.403050124711420404835698594840910402827/1-254.jpg'
 elif "44" in patient_select:
-  patient_id = 44
-  image_url = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/id44_malig.jpg'
+    patient_id = 44
+    image_url = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/id44_malig.jpg'
+    image_url_nearest1 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/44_nearest1_id289.jpg'
+    image_url_nearest2 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/44_nearest2_id436.jpg'
+    image_url_nearest3 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/44_nearest3_id415.jpg'
+    image_file_name = 'hcls/dicom/jpeg/file4/1.3.6.1.4.1.9590.100.1.2.408053815012156684010240636493066172601/1-201.jpg'
 elif "25" in patient_select:
-  patient_id = 25 
-  image_url = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/id250_benign_wo_cb.jpg'
+    patient_id = 25 
+    image_url = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/id250_benign_wo_cb.jpg'
+    image_url_nearest1 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/25_nearest1_id675.jpg'
+    image_url_nearest2 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/25_nearest2_id82.jpg'
+    image_url_nearest3 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/25_nearest3_id20.jpg'
+    image_file_name = 'hcls/dicom/jpeg/file4/1.3.6.1.4.1.9590.100.1.2.43851505613003999219808826221286958753/1-202.jpg' 
 else:
-  patient_id = 15
-  image_url = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/id15_benign.jpg'
+    patient_id = 15
+    image_url = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/id15_benign.jpg'
+    image_url_nearest1 = ''
+    image_url_nearest2 = ''
+    image_url_nearest3 = ''
+    image_file_name = 'hcls/dicom/jpeg/file4/1.3.6.1.4.1.9590.100.1.2.403050124711420404835698594840910402827/1-254.jpg'
+
 
 st.write(':blue[**Original Mammogram:**] ')
 st.image(image_url, width=400)
@@ -223,16 +249,7 @@ st.header('2. Generate a Unique Vector for Image')
 st.write("We will now use Vertex AI to create a unique 1048-dimension vector describing this image")
 
 image_bucket_name = "hcls_genai"
-if "15" in patient_select:
-  image_file_name = 'hcls/dicom/jpeg/file4/1.3.6.1.4.1.9590.100.1.2.403050124711420404835698594840910402827/1-254.jpg'
-elif "44" in patient_select:
-  image_file_name = 'hcls/dicom/jpeg/file4/1.3.6.1.4.1.9590.100.1.2.408053815012156684010240636493066172601/1-201.jpg'
-elif "250" in patient_select:
-  image_file_name = 'hcls/dicom/jpeg/file4/1.3.6.1.4.1.9590.100.1.2.43851505613003999219808826221286958753/1-202.jpg' 
-else:
-  image_file_name = 'hcls/dicom/jpeg/file4/1.3.6.1.4.1.9590.100.1.2.403050124711420404835698594840910402827/1-254.jpg'
-
-# Note: this is the code to pull embeddings but no need to run it everytime -- below is a partial static embedding
+# Note: the line below is what you'd actually use to pull embeddings -- but no need to run it everytime -- what I'm using just for the demo is a partial hard-coded embedding
 # embedding = getImageEmbeddingFromGcsObject(image_bucket_name, image_file_name)
 embedding = '[0.0192286577, 0.0154227763, -0.00861405395, -0.0110541359, 0.00163213036, 0.0169473756, 0.0313014351, 0.0117419316, -0.0133915171, -0.0278525781, -0.0225973539, -0.0145366518, -0.00996714551, 0.0100956941, -0.0322998278, 0.00426189415, 0.000678597658, 0.00289598852, 0.043383915, -0.0168046039, -0.0338218361, 0.0273827296, -0.0387609936, 0.0243778713, -0.017838059, 0.0262691453, 0.0141063891, 0.0187563412, 0.00534455059, -0.0493374169, 0.0303051434, -0.0160473026, -0.0371797644, 0.00692701759, 0.0283875391, 0.0137267867, -0.031491518, -0.00344658154, -0.0162953809, 0.0282125603, 0.0195857305, 0.000363359926, -0.00886089, -0.0321243443, -0.0129843829, -0.0413851812, 0.00696028071, -0.00951314904, 0.00556926243, -0.00392219285, 0.0123352194, -0.00571729336, -0.0315009, -0.0318648852, 0.0276487563, -0.00751679204, -0.0159519389, -0.0142956199, -0.0331410542, -0.0134425694, -0.0391240343, -0.029512519, -0.0197206736, 0.00707804412, -0.00492096599, -0.00647117896, -0.0617857724, 0.018267259, 0.00858118385, -0.0132169547, -0.0118825734, -0.0259654224, 0.0140632382, 0.0322629586, -0.0155665344, 0.00599491037, -0.00619707862, -0.010116837, 0.014256373, 0.00291279797, -0.0188439488, -0.0233990755, -0.0196359698, 0.0290332343, 0.0343161412, 0.011853938, -0.0242382586, -0.0174036417, 0.0190506708, 0.0239307974, 0.0375967883, 0.00169354863, -0.00696445908, -0.212390184, -0.0393398367, -0.00412424514, 0.0287610441, -0.0191484429, -0.0194245372, 0.036573682, 0.00335917715, 0.0283351112, 0.00356064108, -0.00763658434, 0.0164249223, -0.0351715796, 0.0103293359, 0.0342771858, 0.0513855182, 0.0299044587, 0.00864771195, -0.00549998507, -0.0343904719, 0.053017538, -0.0121561456, -0.00862567406, -0.0286054928, -0.00373028382, 0.0181783382, -0.0164996106, 0.000548590499, -0.0232111346, -0.0140768243, -0.0108239083, -0.0181836095, -0.0924405232, -0.0562132485, 0.0230981708, -0.0188030675, -0.0289928503, -0.000302867556, -0.00210259855, 0.0382087156, -0.0170394182, -0.0265383273, -0.000453168206, 0.0123043815, 0.0101008462, 0.00863749906, 0.00581911532, -0.0136427572, 0.0227771848, -0.0166442432, -0.015468156, 0.0328641944, -0.0121320169, 0.010943478, 0.0164464042, 0.0587355979, -0.0292913243, 0.0260012206, -0.0259103961, -0.00273697358, -0.0440225638, -0.0198445078, 0.0131408246, -0.00456004776, -0.0125101386, 0.0281321425, -0.00958281476, -0.0104698669, 0.00703377603, -0.0381017551, -0.0235447641, -0.00269313878, -0.00408230396, -0.00427079573, 0.00809079502, 0.00154427579, -0.0168978013, -0.00532221142, -0.0203234, 0.00934536103, -0.00743831834, -0.00404534582, -0.00416333741, 0.00497120526, 0.0105548538, -0.0134845609, -0.0241767615, -0.0119690448, 0.0243872032, -0.0192877501, 0.00852868706, -0.0427979454, -0.00119108474]'
 embedding_str = str(embedding)
@@ -248,9 +265,15 @@ st.text(embedding_str)
 st.divider()
 st.header('3. What other mammograms have "similar" vectors?')
 
-st.write("We have a database of several hundred other mammograms. Of the top 20 most similar vectors, how similar were the attributes of the mammogram?")
+st.write("We have a database of several hundred other mammograms that we compare this mammogram against.")
 
-st.write("Note: the similarity score is just the dot product between the two images' vectors")
+images = [image_url_nearest1, image_url_nearest2, image_url_nearest3]
+captions = ["Most Similar Image", "2nd Most Similar Image", "3rd Most Similar Image"]
+st.image(images, width=200, caption=captions)
+
+st.write("The similarity score is just the dot product between the two images' vectors")
+
+st.write("Below is a table describing attributes of the 20 most similar images")
 
 table_name = 'cloudadopt.dicom_mammography.image_model_input_4'
 sql = f"""
@@ -269,7 +292,7 @@ LIMIT 20
 """
 df_rank = client_bq.query(sql).to_dataframe()
 
-def hightlight1(row):
+def highlight1(row):
     ret = ["" for _ in row.index]
     if row.patientorientation == patient_orientation:
         ret[row.index.get_loc("patientorientation")] = "color: green"
@@ -303,7 +326,7 @@ def hightlight1(row):
         ret[row.index.get_loc("mass_subtlety")] = "color: red"
     return ret
 
-df_rank_style = df_rank.style.apply(hightlight1, axis=1)
+df_rank_style = df_rank.style.apply(highlight1, axis=1)
 st.table(df_rank_style)
 
 st.divider()
@@ -311,124 +334,173 @@ st.header('4. Make "Predictions"')
 
 st.write("Caveat: We're not actually making predictions. Instead we're taking the nearest 50 neighbors and weighting similarity scores to see which answer was most common in the most similar images")
 
-st.write(':blue[**A. Patient Orientation:**]')
+def populate_prediction(attribute):
+    st.write(f':blue[**{attribute}:**]')
+    table_name = 'cloudadopt.dicom_mammography.image_model_input_5'
+    sql = f"""    
+    SELECT value_neighbor AS prediction_value
+    FROM `{table_name}`
+    WHERE measurement = '{attribute}' 
+    GROUP BY 1 
+    ORDER BY 1 
+    """
+    df = client_bq.query(sql).to_dataframe()
+    prediction_values = df["prediction_value"].values.tolist()
+    
+    string = "'"
+    prediction_values_new = [string + x + string for x in prediction_values]
+    prediction_values_str = ",".join(prediction_values_new)
 
-table_name = 'cloudadopt.dicom_mammography.image_model_input_5'
-sql = f"""
-with pre_data as (
-  SELECT
-        value AS actual
-      , value_neighbor AS prediction
-      , AVG(dot_product100) * 100 * 100 AS predicted_value
-  FROM `{table_name}` a
-  WHERE id = {patient_id}
-  AND measurement = 'patient_orientation' 
-  AND rank_neighbor < 50
-  GROUP BY 1,2
-)
-, max_pred as (
-  SELECT max(predicted_value) as max_predicted
-  FROM pre_data
-)
-, pred_winner as (
-  SELECT 
-      a.actual
-    , a.prediction 
-  FROM pre_data a 
-  INNER JOIN max_pred b
-    ON a.predicted_value = b.max_predicted
-)
-, pivot_out as (
-  SELECT * 
-  FROM pre_data
-  PIVOT(AVG(round(predicted_value,1)) FOR prediction IN ('MLO','CC'))
-)
-SELECT 
-    a.*
-  , b.* except (actual)
-FROM pred_winner a 
-, pivot_out b
-"""
-df = client_bq.query(sql).to_dataframe()
-prediction_value = df['prediction'].values[0]
-actual_value = df['actual'].values[0]
+    sql = f"""
+    with pre_data as (
+    SELECT
+            value AS actual
+        , value_neighbor AS prediction
+        , AVG(dot_product100) * 100 * 100 AS predicted_value
+    FROM `{table_name}` a
+    WHERE id = {patient_id}
+    AND measurement = '{attribute}' 
+    AND rank_neighbor < 50
+    GROUP BY 1,2
+    )
+    , sum_predicted_values as (
+    SELECT sum(predicted_value) as total_value
+    FROM pre_data
+    )
+    , updated_values as (
+    SELECT a.* except(predicted_value) 
+    , a.predicted_value / b.total_value as predicted_value
+    FROM pre_data a 
+    , sum_predicted_values b 
+    )
+    , max_pred as (
+    SELECT max(predicted_value) as max_predicted
+    FROM updated_values
+    )
+    , pred_winner as (
+    SELECT 
+        a.actual
+        , a.prediction 
+    FROM updated_values a 
+    INNER JOIN max_pred b
+        ON a.predicted_value = b.max_predicted
+    )
+    , pivot_out as (
+    SELECT * 
+    FROM updated_values
+    PIVOT(AVG(round(predicted_value,5)) FOR prediction IN ({prediction_values_str}))
+    )
+    SELECT 
+        a.*
+    , b.* except (actual)
+    FROM pred_winner a 
+    , pivot_out b
+    """
+    # st.text(sql)
+    df = client_bq.query(sql).to_dataframe()
+    prediction_value = df['prediction'].values[0]
+    actual_value = df['actual'].values[0]
 
-if actual_value == prediction_value: 
-   answer = 'Correct!'
-else: 
-   answer = "Incorrect"
-
-if actual_value == prediction_value: 
-   st.write(f':green[**{answer}**]')
-else: 
-   st.write(f':red[**{answer}**]')
-
-
-
-def highlight2(row):
-    # row.background_gradient(axis=1, subset=['MLO','CC'], cmap="Blues")
-    ret = ["" for _ in row.index]
     if actual_value == prediction_value: 
-        ret[row.index.get_loc("prediction")] = "background-color: green"
+        answer = 'Correct!'
+        explanation = ""
     else: 
-        ret[row.index.get_loc("prediction")] = "background-color: red, color:white"
-    return ret
+        answer = "Incorrect" 
+        explanation = "The actual answer is " + actual_value + " while the model guessed " + prediction_value
 
-def highlight3(xyz):
-    xyz.background_gradient(axis=1, subset=['MLO','CC'], cmap="Blues")
-    return xyz 
+    if actual_value == prediction_value: 
+        st.write(f':green[**{answer}**]')
+    else: 
+        st.write(f':red[**{answer}**] ')
+        st.write(explanation)
 
-def highlight4(row):
-    # row.background_gradient(axis=1, subset=['MLO','CC'], cmap="Blues")
-    ret = ["" for _ in row.index]
-    ret[row.index.get_loc("prediction")] = "color: white"
-    return ret
+    def highlight2(row):
+        ret = ["" for _ in row.index]
+        if actual_value == prediction_value: 
+            ret[row.index.get_loc("prediction")] = "background-color: green"
+        else: 
+            ret[row.index.get_loc("prediction")] = "background-color: red"
+        return ret
 
-df_style = df.style.pipe(highlight3).apply(highlight2, axis=1).apply(highlight4, axis=1)
-st.table(df_style)
+    def highlight3(xyz):
+        exec_string = f'xyz.background_gradient(axis=1, subset=[{prediction_values_str}], cmap=\"Blues\")'
+        # st.write(exec_string)
+        exec(exec_string)
+        return xyz 
 
+    def highlight4(row):
+        ret = ["" for _ in row.index]
+        ret[row.index.get_loc("prediction")] = "color: white"
+        return ret
 
-# patient_orientation = df['patientorientation'].values[0] 
-# left_right_breast = df['left_or_right_breast'].values[0] 
-# breast_density = df['breast_density'].values[0] 
-# mass_pathology = df['mass_pathology'].values[0] 
-# mass_subtlety = df['mass_subtlety'].values[0] 
+    df_style = df.style.pipe(highlight3).apply(highlight2, axis=1).apply(highlight4, axis=1)
+    st.table(df_style)
 
-# def highlight_patient_orientation(s):
-#     return ['text: green']*len(s) if s.patient_orientation else ['background-color: red']*len(s)
+    return attribute 
 
-# def color_survived(val):
-#     color = 'green' if val else 'red'
-#     return f'text: {color}'
-
-# st.dataframe(df.style.apply(highlight_survived, axis=1))
-# st.dataframe(df.style.applymap(color_survived, subset=['Survived']))
-
-# # ################
-# # ### predict values 
-# # ################
-
-# # st.divider()
-# # st.header('Predict Values about an Image')
-
-
-
-# # # {"input_text": "embedding: []", "output_text": "{"BodyPartExamined":"BREAST","PatientOrientation":"MLO","breast_density":"4","left_or_right_breast":"RIGHT\",\"test_train\":\"train\",\"mass_vs_calc\":\"calc\","calc_abnormality_id":"1","calc_type":"PUNCTATE","calc_distribution":"SEGMENTAL","calc_assessment":"4","calc_pathology":"BENIGN","calc_subtlety":"1"}"}
-
-
-
-
+populate_prediction("patient_orientation")
+populate_prediction("left_right_breast")
+populate_prediction("breast_density")
+populate_prediction("mass_pathology")
+populate_prediction("mass_subtlety")
 
 ################
 ### Overall Performance 
 ################
 
-st.write('Overall Performance')
-source_url = 'https://demoexpo.cloud.looker.com/login/embed/%2Fembed%2Fdashboards%2F1457?nonce=%22gj4RFJQzhBf7jsnQ%22&time=1691171139&session_length=600&external_user_id=%22test-id-123%22&permissions=%5B%22access_data%22%2C%22see_looks%22%2C%22see_user_dashboards%22%2C%22see_lookml_dashboards%22%2C%22explore%22%5D&models=%5B%22adopt%22%5D&group_ids=%5B%5D&external_group_id=%22%22&user_attributes=%7B%7D&access_filters=%7B%7D&first_name=%22test2%22&last_name=%22test3%22&force_logout_login=true&signature=nXF%2FDWLWPfZyRx5AiXy5vDoRjGg%3D'
-components.html(f'''<iframe src={source_url} width='600' height='338' frameborder='0'></iframe>''', width=650,height=350)
+st.divider()
+st.header('5. Overall Performance')
 
-components.html('''<iframe src='https://demoexpo.cloud.looker.com/embed/public/pYZDMrwpBNkQHsK27XPqGvJByZx7Q3Pd?apply_formatting=false&apply_vis=false&toggle=pik' width='600' height='338' frameborder='0'> </iframe>''', width=650,height=350)
+def show_looker_look(url):
+    components.html(f'''
+        <iframe src={url} 
+        width='600' 
+        height='338'
+        frameborder='0'>
+        </iframe>
+    '''
+    , width=620
+    , height=358
+    )
+st.write('**Overall Performance**')
+st.write('The 3 columns show the score for the same values, the score for different values, and the difference')
+st.write('The higher the right most column, the better the model is at predicting the true value')
+st.write('The model is quite good at identifying patient orientation')
+st.write('The model is ok at identifying left/right breast, pathology, and density')
+st.write('The model is not yet good at predicting mass subtlety')
+source_url = 'https://demoexpo.cloud.looker.com/embed/public/TzMs3Vzb5x7Xvnb9QtnygHnS7dWjn2Cm'
+show_looker_look(source_url)
 
+st.write('**Patient Orientation**')
+st.write('Blue boxes show values the models think are more similar')
+st.write('Red boxes show values the models think are less similar')
+st.write('Encouragingly, the model has higher similarities when actual & predicted are both CC or both MLO')
+st.write('Encouragingly, the model has lower similarities when actual & predicted are different')
+source_url = 'https://demoexpo.cloud.looker.com/embed/public/pYZDMrwpBNkQHsK27XPqGvJByZx7Q3Pd'
+show_looker_look(source_url)
+
+st.write('**Left or Right Breast**')
+st.write('Encouragingly, the model has higher similarities when actual & predicted are both left or right')
+st.write('Encouragingly, the model has lower similarities when actual & predicted are different')
+source_url = 'https://demoexpo.cloud.looker.com/embed/public/srGgS6ZBnDxjsZ2cvbfhRdzP3hsvJJSx'
+show_looker_look(source_url)
+
+st.write('**Mass Pathology**')
+st.write('The model is quite good at identifying benign without callback - the bright blue box in the center')
+st.write('Benign & malignant is much murkier, purple - the model struggles to differentiate')
+source_url = 'https://demoexpo.cloud.looker.com/embed/public/dbB3pFnvVHCkj9dzbGvM888y7wzmWHVk'
+show_looker_look(source_url)
+
+st.write('**Breast Density**')
+st.write('Here the story is murkier - optimally, there would be blue boxes where actual & predicted are both 1,2,3, or 4')
+st.write('Instead, while the model is pretty good at identifying 3s & 4s correctly (blue in bottom right boxes), it is less good at 1s and 2s')
+source_url = 'https://demoexpo.cloud.looker.com/embed/public/3cjMpd4gt4FD8bNsmjXY6FRkZkrBJmPK'
+show_looker_look(source_url)
+
+st.write('**Mass Subtlety**')
+st.write('The model struggles with subtlety - its predictions do not strongly correlate with actual values')
+source_url = 'https://demoexpo.cloud.looker.com/embed/public/GW3vVFKJxKdWpTBqQX7MQTbfXsKwkQNt'
+show_looker_look(source_url)
 
 
 
