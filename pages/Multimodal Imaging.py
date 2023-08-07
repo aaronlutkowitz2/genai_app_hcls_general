@@ -6,7 +6,7 @@ Creation Date: July 10, 2023
 @author: Aaron Wilkowitz
 """
 ################
-### notes on how to replicate this
+### Notes on steps I took
 ################
 
 # 1. Downloaded CBIS-DDSM dataset: https://www.kaggle.com/datasets/awsaf49/cbis-ddsm-breast-cancer-image-dataset
