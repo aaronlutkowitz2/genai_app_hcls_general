@@ -32,3 +32,8 @@ If there's an issue with one of the container commands, test that docker code wo
 
 Note: you may have to delete test_container first - Then the URL should work with latest code
 > docker rm test_container
+
+# Other Guides
+https://medium.com/@faizififita1/how-to-deploy-your-streamlit-web-app-to-google-cloud-run-ba776487c5fe
+
+https://medium.com/analytics-vidhya/deploying-streamlit-apps-to-google-app-engine-in-5-simple-steps-5e2e2bd5b172
