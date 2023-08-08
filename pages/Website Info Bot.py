@@ -83,52 +83,99 @@ st.header('Architecture')
 
 # components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vSmJtHbzCDJsxgrrrcWHkFOtC5PkqKGBwaDmygKiinn0ljyXQ0Xaxzg4mBp2mhLzYaXuSzs_2UowVwe/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
+# def detect_intent_texts(agent, session_id, texts, language_code, location_var):
+#     """Returns the result of detect intent with texts as inputs.
 
-project_id = "gbot-test-066"
+#     Using the same `session_id` between requests allows continuation
+#     of the conversation."""
+#     session_path = f"{agent}/sessions/{session_id}"
+#     # print(f"Session path: {session_path}\n")
+#     st.write(":blue[Session path]: " + session_path)
+#     client_options = None
+#     agent_components = AgentsClient.parse_agent_path(agent)
+#     location_id = location_var # agent_components["location"]
+#     if location_id != "global":
+#         api_endpoint = f"{location_id}-dialogflow.googleapis.com:443"
+#         print(f"API Endpoint: {api_endpoint}\n")
+#         client_options = {"api_endpoint": api_endpoint}
+#     session_client = SessionsClient(client_options=client_options)
+
+#     for text in texts:
+#         text_input = session.TextInput(text=text)
+#         query_input = session.QueryInput(text=text_input, language_code=language_code)
+#         request = session.DetectIntentRequest(
+#             session=session_path, query_input=query_input
+#         )
+#         response = session_client.detect_intent(request=request)
+
+#         print("=" * 20)
+#         print(f"Query text: {response.query_result.text}")
+#         response_messages = [
+#             " ".join(msg.text.text) for msg in response.query_result.response_messages
+#         ]
+#         print(f"Response text: {' '.join(response_messages)}\n")
+#         st.write(response_messages)
+
+def detect_intent_texts(agent, session_id, texts, language_code, location_id):
+    
+    agent = f"projects/{project_id}/locations/{location_id}/agents/{agent_id}"
+    session_path = f"{agent}/sessions/{session_id}"
+    agent_components = AgentsClient.parse_agent_path(agent)
+    
+    # location_id = agent_components["location"]
+    if location_id != "global":
+        api_endpoint = f"{location_id}-dialogflow.googleapis.com:443"
+        print(f"API Endpoint: {api_endpoint}\n")
+        client_options = {"api_endpoint": api_endpoint}
+        # st.write("API Endpoint " + api_endpoint)
+        print(f"API Endpoint: {api_endpoint}\n")
+
+    client_options = None 
+    session_client = SessionsClient(client_options=client_options)
+
+    for text in texts:
+      st.write(":blue[**question: **]" + text)
+      text_input = session.TextInput(text=text)
+
+      query_input = session.QueryInput(
+          text=text_input
+        , language_code=language_code
+      )
+
+      request = session.DetectIntentRequest(
+          session=session_path, query_input=query_input
+      )
+
+      response = session_client.detect_intent(request=request)
+      response_messages = [
+        " ".join(msg.text.text) for msg in response.query_result.response_messages
+      ]
+      response_text = response_messages[0]
+      print(response_text)
+      st.write(":blue[**answer: **]" + response_text)
+
+project_id = "cloudadopt" 
 location_id = "global"
-agent_id = "83f5643e-b63c-407c-a9b9-58cadb5060b7"
-agent = f"projects/{project_id}/locations/{location_id}/agents/{agent_id}"
+agent_id = "299df307-e528-4fbd-acbb-c6d477b33913"
 session_id = uuid.uuid4()
 texts = ["When was HCA founded?"]
 language_code = "en-us"
+detect_intent_texts(agent_id, session_id, texts, language_code, location_id)
 
-session_path = f"{agent}/sessions/{session_id}"
-st.write("Session Path " + session_path)
+
+# st.write("Session Path " + session_path)
 # print(f"Session path: {session_path}\n")
 
 # client_options = None
 # json_file_path = '/Users/aaronwilkowitz/Documents/hcls_work/genai_app_hcls_general/keys/gbot-test-071-ac2f21641848.json'
-client_options = None 
+
 # ClientOptions(
 #     credentials_file=json_file_path
 #   )
-agent_components = AgentsClient.parse_agent_path(agent)
-location_id = agent_components["location"]
-if location_id != "global":
-  api_endpoint = f"{location_id}-dialogflow.googleapis.com:443"
-  print(f"API Endpoint: {api_endpoint}\n")
-  client_options = {"api_endpoint": api_endpoint}
-  st.write("API Endpoint " + api_endpoint)
-  # print(f"API Endpoint: {api_endpoint}\n")
 
-session_client = SessionsClient(client_options=client_options)
 
-for text in texts:
-  text_input = session.TextInput(text=text)
-  st.write("text input " + str(text_input))
 
-  query_input = session.QueryInput(
-      text=text_input
-    , language_code=language_code
-  )
-  st.write("query input " + str(query_input))
 
-  request = session.DetectIntentRequest(
-      session=session_path, query_input=query_input
-  )
-  response = session_client.detect_intent(request=request)
-  st.write("response " + response)
-  
 
 
 # print(f"Query text: {response.query_result.text}")
@@ -163,17 +210,17 @@ for text in texts:
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""DialogFlow API Detect Intent Python sample with text inputs.
+# """DialogFlow API Detect Intent Python sample with text inputs.
 
-Examples:
-  python detect_intent_texts.py -h
-  python detect_intent_texts.py --agent AGENT \
-  --session-id SESSION_ID \
-  "hello" "book a meeting room" "Mountain View"
-  python detect_intent_texts.py --agent AGENT \
-  --session-id SESSION_ID \
-  "tomorrow" "10 AM" "2 hours" "10 people" "A" "yes"
-"""
+# Examples:
+#   python detect_intent_texts.py -h
+#   python detect_intent_texts.py --agent AGENT \
+#   --session-id SESSION_ID \
+#   "hello" "book a meeting room" "Mountain View"
+#   python detect_intent_texts.py --agent AGENT \
+#   --session-id SESSION_ID \
+#   "tomorrow" "10 AM" "2 hours" "10 people" "A" "yes"
+# """
 
 # # [START dialogflow_cx_detect_intent_text]
 # def run_sample():
