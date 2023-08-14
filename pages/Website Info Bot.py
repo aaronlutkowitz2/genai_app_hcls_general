@@ -161,23 +161,24 @@ def detect_intent_texts(agent, session_id, texts, language_code, location_id):
         " ".join(msg.text.text) for msg in response.query_result.response_messages
       ]
       response_text = response_messages[0]
-      print(response_text)
+      response_text = response_text.replace("$", "USD ")
+      # st.text(response_text)
       st.write(":blue[**answer:**] " + response_text)
 
       # URL 
       answer_url_pre = str(response.query_result.response_messages[1]) # .payload) # 
-      st.write(":blue[**pre-URL:**] " + answer_url_pre)
+      # st.write(":blue[**pre-URL:**] " + answer_url_pre)
       input_string = answer_url_pre
       # pattern = r'"actionLink" value { string_value: "((https?://[^"]+))" }'
       pattern = r'"((https?://[^"]+))"'
-      st.write(":blue[**pattern:**] " + pattern)
+      # st.write(":blue[**pattern:**] " + pattern)
       match = re.search(pattern, input_string)
-      st.write(":blue[**match:**] " + str(match))
+      # st.write(":blue[**match:**] " + str(match))
 
       if match:
           answer_url = match.group(1)
           # print(url)
-          st.write(":blue[**URL:**] " + answer_url)
+          st.write(":blue[**Reference:**] " + answer_url)
       else:
           answer_url = "not found"
           st.write("URL not found")
