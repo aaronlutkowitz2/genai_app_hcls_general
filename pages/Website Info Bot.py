@@ -69,21 +69,21 @@ st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
 # Video
-st.divider()
-st.header('30 Second Video')
+# st.divider()
+# st.header('30 Second Video')
 
-default_width = 80 
-ratio = 1
-width = max(default_width, 0.01)
-side = max((100 - width) / ratio, 0.01)
+# default_width = 80 
+# ratio = 1
+# width = max(default_width, 0.01)
+# side = max((100 - width) / ratio, 0.01)
 
 # _, container, _ = st.columns([side, width, side])
 # container.video(data='https://youtu.be/NxlaDk6UYN4')
 
 # Architecture
 
-st.divider()
-st.header('Architecture')
+# st.divider()
+# st.header('Architecture')
 
 # components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vSmJtHbzCDJsxgrrrcWHkFOtC5PkqKGBwaDmygKiinn0ljyXQ0Xaxzg4mBp2mhLzYaXuSzs_2UowVwe/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
@@ -194,20 +194,21 @@ website_name = st.selectbox(
     'What website do you want a summary on?'
     , (
           "GCP"
-        , "Website 1"
-        , "Website 2"
+        , "Ambetter Health"
         , "Website 3"
+        , "Website 4"
       )
   )
 st.write(':blue[**Chatbot:**] ' + website_name)
 
 agent_id_gcp = "06687b2f-4a64-41e5-9ca6-b1f0cd3a6b91"
+agent_id_ambetter = "1d903025-b6fb-4487-8162-f6e3fc6242bc"
 agent_id_2 = "06687b2f-4a64-41e5-9ca6-b1f0cd3a6b91"
 
 if website_name == "GCP":
    agent_id = agent_id_gcp
-elif website_name == "Website 1":
-   agent_id = agent_id_2
+elif website_name == "Ambetter Health":
+   agent_id = agent_id_ambetter
 else: 
    agent_id = agent_id_gcp
 
