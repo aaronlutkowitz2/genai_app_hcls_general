@@ -21,6 +21,8 @@ Creation Date: July 10, 2023
   #  -- Eventually, we get to `cloudadopt.dicom_mammography.image_model_input_4` (wide) and `cloudadopt.dicom_mammography.image_model_input_5` (long), which we use in the scripts below
 # In the demo, we "pre-baked" / pre-uploaded 3 images to run through, but you could easily code this to upload a brand new image, vectorize it, & run through the same process
 
+## Note: I added in a section for text as well - same concept 
+
 ################
 ### import 
 ################
@@ -101,9 +103,11 @@ st.header('1. Select a Patient')
 patient_select = st.selectbox(
     'Which patient do you want to select?'
     , (
-          "Patient 15 (Benign)"
-        , "Patient 44 (Malignant)"
-        , "Patient 25 (Benign wo Callback)"
+          "Mammogram of Patient 15 (Benign)"
+        , "Mammogram of Patient 44 (Malignant)"
+        , "Mammogram of Patient 25 (Benign wo Callback)"
+        , "Text of benign patient, left breast, MLO orientation"
+        , "Text of malignant patient, right breast, CC orientation"
       )
   )
 
@@ -114,6 +118,7 @@ if "15" in patient_select:
     image_url_nearest2 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/15_nearest2_id480.jpg'
     image_url_nearest3 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/15_nearest3_id287.jpg'
     image_file_name = 'hcls/dicom/jpeg/file4/1.3.6.1.4.1.9590.100.1.2.403050124711420404835698594840910402827/1-254.jpg'
+    original_string = 'XX'
 elif "44" in patient_select:
     patient_id = 44
     image_url = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/id44_malig.jpg'
@@ -121,6 +126,7 @@ elif "44" in patient_select:
     image_url_nearest2 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/44_nearest2_id436.jpg'
     image_url_nearest3 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/44_nearest3_id415.jpg'
     image_file_name = 'hcls/dicom/jpeg/file4/1.3.6.1.4.1.9590.100.1.2.408053815012156684010240636493066172601/1-201.jpg'
+    original_string = 'XX'
 elif "25" in patient_select:
     patient_id = 25 
     image_url = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/id250_benign_wo_cb.jpg'
@@ -128,22 +134,44 @@ elif "25" in patient_select:
     image_url_nearest2 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/25_nearest2_id82.jpg'
     image_url_nearest3 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/25_nearest3_id20.jpg'
     image_file_name = 'hcls/dicom/jpeg/file4/1.3.6.1.4.1.9590.100.1.2.43851505613003999219808826221286958753/1-202.jpg' 
+    original_string = 'XX'
+elif "MLO orientation" in patient_select:
+    patient_id = 10001
+    image_url = 'XX'
+    image_url_nearest1 = 'XX'
+    image_url_nearest2 = 'XX'
+    image_url_nearest3 = 'XX'
+    image_file_name = 'XX' 
+    original_string = "A mammogram of a benign reading of a left breast with MLO orientation"
+elif "CC orientation" in patient_select:
+    patient_id = 10002 
+    image_url = 'XX'
+    image_url_nearest1 = 'XX'
+    image_url_nearest2 = 'XX'
+    image_url_nearest3 = 'XX'
+    image_file_name = 'XX'
+    original_string = "A mammogram of a malignant reading of a right breast with CC orientation"
 else:
     patient_id = 15
     image_url = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/id15_benign.jpg'
-    image_url_nearest1 = ''
-    image_url_nearest2 = ''
-    image_url_nearest3 = ''
+    image_url_nearest1 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/15_nearest1_id8.jpg'
+    image_url_nearest2 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/15_nearest2_id480.jpg'
+    image_url_nearest3 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/15_nearest3_id287.jpg'
     image_file_name = 'hcls/dicom/jpeg/file4/1.3.6.1.4.1.9590.100.1.2.403050124711420404835698594840910402827/1-254.jpg'
-
+    original_string = 'XX'
 
 st.write(':blue[**Original Mammogram:**] ')
-st.image(image_url, width=400)
+if patient_id < 1000:
+    question_type = 'image'
+    st.image(image_url, width=400)
+else:
+    question_type = 'text'
+    st.write(original_string)
 
 st.write(':blue[**Patient Facts:**] ')
 client_bq = bigquery.Client()
 
-table_name = 'cloudadopt.dicom_mammography.image_model_input_4'
+table_name = f'cloudadopt.dicom_mammography.{question_type}_model_input_4'
 sql = f"""
 SELECT 
     id
@@ -275,13 +303,17 @@ st.write("We have a database of several hundred other mammograms that we compare
 
 images = [image_url_nearest1, image_url_nearest2, image_url_nearest3]
 captions = ["Most Similar Image", "2nd Most Similar Image", "3rd Most Similar Image"]
-st.image(images, width=200, caption=captions)
+
+if question_type == 'image':
+    st.image(images, width=200, caption=captions)
+else:
+    pass 
 
 st.write("The similarity score is just the dot product between the two images' vectors")
 
 st.write("Below is a table describing attributes of the 20 most similar images")
 
-table_name = 'cloudadopt.dicom_mammography.image_model_input_4'
+table_name = f'cloudadopt.dicom_mammography.{question_type}_model_input_4'
 sql = f"""
 SELECT 
     id_neighbor as id 
@@ -340,9 +372,9 @@ st.header('4. Make "Predictions"')
 
 st.write("Caveat: We're not actually making predictions. Instead we're taking the nearest 50 neighbors and weighting similarity scores to see which answer was most common in the most similar images")
 
-def populate_prediction(attribute):
+def populate_prediction(question_type_var,attribute):
     st.write(f':blue[**{attribute}:**]')
-    table_name = 'cloudadopt.dicom_mammography.image_model_input_5'
+    table_name = f'cloudadopt.dicom_mammography.{question_type_var}_model_input_5'
     sql = f"""    
     SELECT value_neighbor AS prediction_value
     FROM `{table_name}`
@@ -444,11 +476,20 @@ def populate_prediction(attribute):
 
     return attribute 
 
-populate_prediction("patient_orientation")
-populate_prediction("left_right_breast")
-populate_prediction("breast_density")
-populate_prediction("mass_pathology")
-populate_prediction("mass_subtlety")
+populate_prediction(question_type, "patient_orientation")
+populate_prediction(question_type, "left_right_breast")
+
+if question_type == 'image':
+    populate_prediction(question_type, "breast_density")
+else:
+    pass 
+
+populate_prediction(question_type, "mass_pathology")
+
+if question_type == 'image':
+    populate_prediction(question_type, "mass_subtlety")
+else:
+    pass 
 
 ################
 ### Overall Performance 
@@ -508,9 +549,19 @@ st.write('The model struggles with subtlety - its predictions do not strongly co
 source_url = 'https://demoexpo.cloud.looker.com/embed/public/GW3vVFKJxKdWpTBqQX7MQTbfXsKwkQNt'
 show_looker_look(source_url)
 
-################
+
+
+
+
+
+################################################################
 ### APPENDIX: create embeddings -- one time to generate embeddings on all images
+################################################################
+
 ################
+### SECTION 1: Images
+################
+
 
 #### One time process: run all 500 embeddings on the images
 
@@ -550,3 +601,48 @@ show_looker_look(source_url)
 #   query_job = client_bq.query(query)  # Make an API request.
 #   # st.write(query)
 #   st.write(image_file_name + ' done')
+
+################
+### SECTION 2: TEXT
+################
+
+# #### One time process: run embeddings on text
+
+# sample_text1 = "A mammogram of a benign reading of a left breast with MLO orientation"
+# sample_text2 = "A mammogram of a malignant reading of a right breast with CC orientation"
+# sample_text3 = "A mammogram of a left breast with MLO orientation"
+# sample_text4 = "A mammogram of a right breast with CC orientation"
+# sample_text5 = "A mammogram with MLO orientation"
+# sample_text6 = "A mammogram CC orientation"
+
+# sample_list = [sample_text1, sample_text2, sample_text3, sample_text4, sample_text5, sample_text6]
+
+# st.write(type(sample_list))
+# project_id = 'cloudadopt' # @param {type: "string"}
+
+# # bucket_name = "hcls_genai"
+# # new_file_name = 'hcls/dicom/csv/image_model_input.csv'
+# # df = pd.read_csv('gs://' + bucket_name + '/' + new_file_name) 
+# # df = df.head(2)
+# # st.write(df)
+# # df_embedding = pd.DataFrame(columns=['image_path', 'embedding_str'])
+# client_bq = bigquery.Client()
+
+# ## Add this junk line of code to ensure this does not run and re-calculate all embeddings
+# # xlkjlkajdsflkjasdf
+
+# for index, value in enumerate(sample_list):
+#   embedding = getTextEmbedding(value)
+#   embedding_str = str(embedding)
+#   index_value = index + 1 
+#   value_value = value
+
+#   # Construct a BigQuery client object.
+#   table_name = 'cloudadopt.dicom_mammography.text_model_embedding'
+#   query = f"""
+#   INSERT INTO `{table_name}`
+#   SELECT current_datetime(), {index_value}, '{value_value}', '{embedding_str}' 
+#   """
+#   query_job = client_bq.query(query)  # Make an API request.
+#   # st.write(query)
+#   st.write(value + ' done')

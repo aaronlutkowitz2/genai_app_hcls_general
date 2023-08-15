@@ -290,6 +290,158 @@ UNION ALL SELECT id, id_neighbor, rank_neighbor, dot_product, dot_product10, dot
 UNION ALL SELECT id, id_neighbor, rank_neighbor, dot_product, dot_product10, dot_product100, 'mass_subtlety' as measurement, cast(mass_subtlety as string) as value, cast(mass_subtlety_neighbor as string) as value_neighbor FROM `cloudadopt.dicom_mammography.image_model_input_4`
 ;
 
+/************************
+Text Steps -- Repeat steps
+************************/
+
+CREATE OR REPLACE TABLE `cloudadopt.dicom_mammography.text_model_input_final` AS 
+SELECT 
+    embedding_str 
+  , index + 10000 as id
+  , original_string 
+  , 'BREAST' as bodypartexamined
+  , case 
+      when lower(original_string) like "%mlo%" then 'MLO'
+      when lower(original_string) like "%cc%" then 'CC'
+      else 'Unknown'
+    end as patientorientation
+  , 999 as breast_density
+  , case 
+      when lower(original_string) like "%left%" then 'LEFT'
+      when lower(original_string) like "%right%" then 'RIGHT'
+      else 'Unknown'
+    end as left_or_right_breast
+  , 'train' as test_train
+  , 'mass' as mass_vs_calc
+  , null as calc_abnormality_id 
+  , null as calc_type
+  , null as calc_distribution
+  , null as calc_assessment
+  , null as calc_pathology 
+  , null as calc_subtlety
+  , null as mass_abnormality_id
+  , null as mass_shape 
+  , null as mass_margins
+  , null as mass_assessment
+  , case 
+      when lower(original_string) like "%benign%" then 'BENIGN_WITHOUT_CALLBACK'
+      when lower(original_string) like "%malignant%" then 'MALIGNANT'
+      else 'Unknown'
+    end as mass_pathology
+  , 999 as mass_subtlety
+FROM `cloudadopt.dicom_mammography.text_model_embedding`
+; 
+
+
+CREATE OR REPLACE TABLE `cloudadopt.dicom_mammography.text_model_input_1` AS 
+WITH pretable as (
+  SELECT 
+    id
+  , replace(replace(embedding_str,'[',''),']','') as embedding_str
+  , test_train
+  , mass_vs_calc
+  FROM `cloudadopt.dicom_mammography.text_model_input_final` 
+)
+SELECT 
+    id
+  , ARRAY(SELECT CAST(num AS FLOAT64) FROM UNNEST(SPLIT(embedding_str)) num) as embedding
+  , test_train
+  , mass_vs_calc
+FROM pretable 
+;
+
+CREATE OR REPLACE TABLE `cloudadopt.dicom_mammography.text_model_input_2` AS 
+SELECT 
+    a.id 
+  , a.embedding 
+  , b.id as id_neighbor
+  , b.embedding as embedding_neighbor
+FROM `cloudadopt.dicom_mammography.text_model_input_1` a 
+LEFT JOIN `cloudadopt.dicom_mammography.image_model_input_1` b
+  ON a.mass_vs_calc = b.mass_vs_calc
+  AND a.id <> b.id
+;
+
+CREATE OR REPLACE TABLE `cloudadopt.dicom_mammography.text_model_input_3` AS 
+SELECT *,
+  (SELECT SUM(element1 * element2) 
+    FROM t.embedding element1 WITH OFFSET pos
+    JOIN t.embedding_neighbor element2 WITH OFFSET pos 
+    USING(pos)
+  ) dot_product
+FROM `cloudadopt.dicom_mammography.text_model_input_2` t
+; 
+
+CREATE OR REPLACE TABLE `cloudadopt.dicom_mammography.text_model_input_4` AS 
+with predata as (
+SELECT 
+    a.id
+  , a.id_neighbor
+  , dot_product
+  , pow(dot_product,10) as dot_product10
+  , pow(dot_product,100) as dot_product100
+  , b.bodypartexamined
+  , c.bodypartexamined as bodypartexamined_neighbor
+  , b.patientorientation
+  , c.patientorientation as patientorientation_neighbor
+  , b.breast_density
+  , c.breast_density as breast_density_neighbor
+  , b.left_or_right_breast
+  , c.left_or_right_breast as left_or_right_breast_neighbor
+  , b.mass_abnormality_id
+  , c.mass_abnormality_id as mass_abnormality_id_neighbor
+  , b.mass_shape
+  , c.mass_shape as mass_shape_neighbor
+  , b.mass_margins
+  , c.mass_margins as mass_margins_neighbor
+  , b.mass_assessment
+  , c.mass_assessment as mass_assessment_neighbor
+  , b.mass_pathology
+  , c.mass_pathology as mass_pathology_neighbor
+  , b.mass_subtlety
+  , c.mass_subtlety as mass_subtlety_neighbor
+FROM `cloudadopt.dicom_mammography.text_model_input_3` a 
+LEFT JOIN `cloudadopt.dicom_mammography.text_model_input_final` b 
+  ON a.id = b.id 
+LEFT JOIN `cloudadopt.dicom_mammography.image_model_input_final` c
+  ON a.id_neighbor = c.id 
+WHERE c.test_train = 'test' # only test included in neighbors exercise
+AND b.mass_vs_calc = 'mass'
+AND c.mass_vs_calc = 'mass'
+ORDER by 1,3 desc 
+)
+SELECT 
+    id
+  , id_neighbor
+  , rank() over (partition by id order by dot_product desc) as rank_neighbor
+  , * except (id, id_neighbor)
+FROM predata
+ORDER BY 1,3
+;
+
+CREATE OR REPLACE TABLE `cloudadopt.dicom_mammography.text_model_input_5` AS 
+          SELECT id, id_neighbor, rank_neighbor, dot_product, dot_product10, dot_product100, 'body_part_examined' as measurement, bodypartexamined as value, bodypartexamined_neighbor as value_neighbor FROM `cloudadopt.dicom_mammography.text_model_input_4`
+UNION ALL SELECT id, id_neighbor, rank_neighbor, dot_product, dot_product10, dot_product100, 'patient_orientation' as measurement, patientorientation as value, patientorientation_neighbor as value_neighbor FROM `cloudadopt.dicom_mammography.text_model_input_4`
+UNION ALL SELECT id, id_neighbor, rank_neighbor, dot_product, dot_product10, dot_product100, 'breast_density' as measurement, cast(breast_density as string) as value, cast(breast_density_neighbor as string) as value_neighbor FROM `cloudadopt.dicom_mammography.text_model_input_4`
+UNION ALL SELECT id, id_neighbor, rank_neighbor, dot_product, dot_product10, dot_product100, 'left_right_breast' as measurement, left_or_right_breast as value, left_or_right_breast_neighbor as value_neighbor FROM `cloudadopt.dicom_mammography.text_model_input_4`
+UNION ALL SELECT id, id_neighbor, rank_neighbor, dot_product, dot_product10, dot_product100, 'mass_abnormality_num' as measurement, cast(mass_abnormality_id as string) as value, cast(mass_abnormality_id_neighbor as string) as value_neighbor FROM `cloudadopt.dicom_mammography.text_model_input_4`
+UNION ALL SELECT id, id_neighbor, rank_neighbor, dot_product, dot_product10, dot_product100, 'mass_shape' as measurement, cast(mass_shape as string) as value, mass_shape_neighbor as value_neighbor FROM `cloudadopt.dicom_mammography.text_model_input_4`
+UNION ALL SELECT id, id_neighbor, rank_neighbor, dot_product, dot_product10, dot_product100, 'mass_margins' as measurement, cast(mass_margins as string) as value, mass_margins_neighbor as value_neighbor FROM `cloudadopt.dicom_mammography.text_model_input_4`
+UNION ALL SELECT id, id_neighbor, rank_neighbor, dot_product, dot_product10, dot_product100, 'mass_assessment' as measurement, cast(mass_assessment as string) as value, cast(mass_assessment_neighbor as string) as value_neighbor FROM `cloudadopt.dicom_mammography.text_model_input_4`
+UNION ALL SELECT id, id_neighbor, rank_neighbor, dot_product, dot_product10, dot_product100, 'mass_pathology' as measurement, mass_pathology as value, mass_pathology_neighbor as value_neighbor FROM `cloudadopt.dicom_mammography.text_model_input_4`
+UNION ALL SELECT id, id_neighbor, rank_neighbor, dot_product, dot_product10, dot_product100, 'mass_subtlety' as measurement, cast(mass_subtlety as string) as value, cast(mass_subtlety_neighbor as string) as value_neighbor FROM `cloudadopt.dicom_mammography.text_model_input_4`
+;
+
+
+
+
+
+
+
+
+
+
+
 -- ## Mass Train
 -- SELECT a.* 
 -- FROM `cloudadopt.dicom_mammography.image_model_input_final_ann_index_input` a
