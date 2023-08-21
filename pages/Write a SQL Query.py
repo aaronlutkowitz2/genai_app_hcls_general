@@ -50,6 +50,8 @@ st.title('GCP HCLS GenAI Demo: Write a BigQuery SQL Query')
 
 # Author & Date
 st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
+st.write('**Original code from**: Ayo Adedeji, ayoad@google.com')
+
 st.write('**Date**: 2023-07-24')
 st.write('**Purpose**: You need to ask a question of your data. Have GenAI generate a query in BigQuery')
 
