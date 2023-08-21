@@ -138,17 +138,17 @@ elif "25" in patient_select:
 elif "MLO orientation" in patient_select:
     patient_id = 10001
     image_url = 'XX'
-    image_url_nearest1 = 'XX'
-    image_url_nearest2 = 'XX'
-    image_url_nearest3 = 'XX'
+    image_url_nearest1 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/15_nearest2_id480.jpg'
+    image_url_nearest2 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/25_nearest2_id82.jpg'
+    image_url_nearest3 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/text1_nearest3_id424.jpg'
     image_file_name = 'XX' 
     original_string = "A mammogram of a benign reading of a left breast with MLO orientation"
 elif "CC orientation" in patient_select:
     patient_id = 10002 
     image_url = 'XX'
-    image_url_nearest1 = 'XX'
-    image_url_nearest2 = 'XX'
-    image_url_nearest3 = 'XX'
+    image_url_nearest1 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/text2_nearest1_id18.jpg'
+    image_url_nearest2 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/text2_nearest2_id543.jpg'
+    image_url_nearest3 = 'https://raw.githubusercontent.com/aaronlutkowitz2/genai_app_hcls_general/main/data/images/mammogram/text2_nearest3_id546.jpg'
     image_file_name = 'XX'
     original_string = "A mammogram of a malignant reading of a right breast with CC orientation"
 else:

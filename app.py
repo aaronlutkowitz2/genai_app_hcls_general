@@ -7,6 +7,7 @@ Creation Date: July 10, 2023
 """
 
 import streamlit as st
+from st_pages import Page, Section, show_pages, add_page_title
 
 # Make page wide
 st.set_page_config(
@@ -26,3 +27,31 @@ st.header('Click on a demo on the left hand side to get started')
 # Gitlink
 st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
+
+add_page_title() # By default this also adds indentation
+
+# Specify what pages should be shown in the sidebar, and what their titles and icons
+# should be
+show_pages(
+    [
+          Page("app.py", "Home", ":house:")
+        
+        , Section("Q&A", ":question:")
+        , Page("pages/Bariatric Med Record to Struct.py", "Q&A on Medical Record, to Struct")
+        , Page("pages/Looker HDE Ask Question.py", "Q&A on HDE / Looker")
+        , Page("pages/Supply Chain PO Chat Answers.py", "Q&A on Supply Chain (Purchase Orders)")
+        , Page("pages/Website Info Bot.py", "Q&A on Public Websites (Many Documents)")
+        
+        , Section("Categorization", ":twisted_rightwards_arrows:")
+        , Page("pages/Imaging Med Record to Struct.py", "Label Medical Imaging for Data Sci Model")
+
+        , Section("Multimodal", ":camera:")
+        , Page("pages/Multimodal Imaging.py", "Read Mammogram (Image & Text)")
+
+        , Section("Code Generation", ":computer:")
+        , Page("pages/Write a SQL Query.py", "Write a SQL Query")
+
+        # , Section("Under Construction - Come Back Later", ":building_construction:")
+        # , Page("pages/Large Doc QA.py", "Large Doc Q&A")
+    ]
+)
