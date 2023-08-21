@@ -278,9 +278,12 @@ def getTextEmbedding(text):
 ################
 
 st.divider()
-st.header('2. Generate a Unique Vector for Image')
+if question_type == 'image':
+    st.header('2. Generate a Unique Vector for Image')
+else:
+    st.header('2. Generate a Unique Vector for Text')
 
-st.write("We will now use Vertex AI to create a unique 1048-dimension vector describing this image")
+st.write(f"We will now use Vertex AI to create a unique 1048-dimension vector describing this {question_type}")
 
 image_bucket_name = "hcls_genai"
 # Note: the line below is what you'd actually use to pull embeddings -- but no need to run it everytime -- what I'm using just for the demo is a partial hard-coded embedding
@@ -299,17 +302,14 @@ st.text(embedding_str)
 st.divider()
 st.header('3. What other mammograms have "similar" vectors?')
 
-st.write("We have a database of several hundred other mammograms that we compare this mammogram against.")
+st.write("We have a database of several hundred other mammograms that we compare this vector against.")
 
 images = [image_url_nearest1, image_url_nearest2, image_url_nearest3]
 captions = ["Most Similar Image", "2nd Most Similar Image", "3rd Most Similar Image"]
 
-if question_type == 'image':
-    st.image(images, width=200, caption=captions)
-else:
-    pass 
+st.image(images, width=200, caption=captions)
 
-st.write("The similarity score is just the dot product between the two images' vectors")
+st.write("The similarity score is just the dot product between the two vectors")
 
 st.write("Below is a table describing attributes of the 20 most similar images")
 

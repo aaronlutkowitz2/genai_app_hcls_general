@@ -8,7 +8,8 @@ EXPOSE 8080
 COPY requirements.txt app/requirements.txt
 
 #install all requirements in requirements.txt
-RUN pip install -r app/requirements.txt
+RUN pip install -r app/requirements.txt 
+# --use-deprecated=legacy-resolver
 RUN pip install --no-dependencies langchain==0.0.242
 # RUN pip3 install aiohttp
 
