@@ -48,5 +48,5 @@ Release date: 2023-07-12
 Release date: 2023-06-26
 
 **New Demos**: 
-- *Sturctured Q&A on Long Medical Document* - [Demo Link](https://genaihcls-zzsg7awyia-uc.a.run.app/Q&A%20on%20Medical%20Record,%20to%20Struct) -- Q&A on a long medical document - return answers in structured format
+- [*Sturctured Q&A on Long Medical Document*](https://genaihcls-zzsg7awyia-uc.a.run.app/Q&A%20on%20Medical%20Record,%20to%20Struct) - [Demo Link](https://genaihcls-zzsg7awyia-uc.a.run.app/Q&A%20on%20Medical%20Record,%20to%20Struct) -- Q&A on a long medical document - return answers in structured format
 - *Categorize Data Science Model* - [Demo Link](https://genaihcls-zzsg7awyia-uc.a.run.app/Label%20Medical%20Imaging%20for%20Data%20Sci%20Model) -- create a list of labels, then label a radiology report
