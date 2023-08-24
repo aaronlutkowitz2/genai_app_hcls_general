@@ -11,11 +11,6 @@ COPY requirements.txt app/requirements.txt
 RUN pip install -r app/requirements.txt 
 RUN pip install --no-dependencies langchain==0.0.242
 
-#manually install scann
-RUN git clone https://github.com/google-research/google-research/
-RUN python google-research/scann/setup.py install
-RUN pip install scann==1.2.9
-
 #Copy all files in current directory into app directory
 COPY . /app
 
@@ -26,7 +21,10 @@ WORKDIR /app
 ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]
 
 
+
+#############
 ## Graveyard
+#############
 
 # COPY cloudadopt-test-genai-real.json app/cloudadopt-test-genai-real.json
 
@@ -43,3 +41,8 @@ ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8080", "--server.addres
 # RUN tar -xf google-cloud-cli-437.0.1-linux-x86_64.tar.gz
 # RUN ./google-cloud-sdk/install.sh
 # RUN gcloud auth application-default login --impersonate-service-account cloudadopt-test-owner@cloudadopt.iam.gserviceaccount.com
+
+# manually install scann
+# RUN git clone https://github.com/google-research/google-research/
+# RUN python google-research/scann/setup.py install
+# RUN pip install scann==1.2.9
