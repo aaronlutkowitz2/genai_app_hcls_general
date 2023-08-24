@@ -48,8 +48,8 @@ show_pages(
         , Page("pages/Bariatric Med Record to Struct.py", "Label Sections of Medical Record, to Struct")
         , Page("pages/Imaging Med Record to Struct.py", "Label Medical Imaging for Data Sci Model")
 
-        # , Section("Workflow", ":gear:")
-        # , Page("pages/Doctor_Appt_Concierge.py", "Doctor Appt Scheduling")
+        , Section("Workflow", ":gear:")
+        , Page("pages/Doctor_Appt_Concierge.py", "Doctor Appt Scheduling")
 
         , Section("Multimodal", ":camera:")
         , Page("pages/Multimodal Imaging.py", "Read Mammogram (Image & Text)")
