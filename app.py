@@ -32,18 +32,24 @@ add_page_title() # By default this also adds indentation
 
 # Specify what pages should be shown in the sidebar, and what their titles and icons
 # should be
+
+# list of emojis: https://streamlit-emoji-shortcodes-streamlit-app-gwckff.streamlit.app/
+
 show_pages(
     [
           Page("app.py", "Home", ":house:")
         
         , Section("Q&A", ":question:")
-        , Page("pages/Bariatric Med Record to Struct.py", "Q&A on Medical Record, to Struct")
         , Page("pages/Looker HDE Ask Question.py", "Q&A on HDE / Looker")
         , Page("pages/Supply Chain PO Chat Answers.py", "Q&A on Supply Chain (Purchase Orders)")
         , Page("pages/Website Info Bot.py", "Q&A on Public Websites (Many Documents)")
         
         , Section("Categorization", ":twisted_rightwards_arrows:")
+        , Page("pages/Bariatric Med Record to Struct.py", "Label Sections of Medical Record, to Struct")
         , Page("pages/Imaging Med Record to Struct.py", "Label Medical Imaging for Data Sci Model")
+
+        # , Section("Workflow", ":gear:")
+        # , Page("pages/Doctor_Appt_Concierge.py", "Doctor Appt Scheduling")
 
         , Section("Multimodal", ":camera:")
         , Page("pages/Multimodal Imaging.py", "Read Mammogram (Image & Text)")

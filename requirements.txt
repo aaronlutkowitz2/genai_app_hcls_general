@@ -3,7 +3,6 @@ google-cloud-aiplatform==1.28.1
 google-cloud-bigquery==3.11.4
 google-cloud-core==2.3.3
 google-cloud-dialogflow-cx==1.21.0
-### ZZZ ### google-cloud-documentai==2.16.0
 google-cloud-storage==2.5.0
 gcsfs==2023.6.0
 looker_sdk==0.1.3b20
@@ -25,35 +24,26 @@ Flask==2.2.2
 functions-framework==3.3.0
 ipython==7.16.1
 ipywidgets==7.5.1
-### ZZZ ### matplotlib==3.7.1 
+
 notebook==6.0.3
-pandas==1.3.2
-### ZZZ ### Pillow==9.5.0
-### ZZZ ### pycryptodome
-### ZZZ ### pypdf==3.11.0 
+pandas==1.3.2 ## original one in demos
 pydantic==1.10.12
 python-dateutil==2.8.2
 pytz==2020.1
 pyyaml==5.3.1
-### ZZZ ### scann==1.2.9
 seaborn==0.10.1
-### ZZZ ### shapely==1.8.5
 streamlit==1.24.0
 st-pages==0.4.3
+# timedelta==2020.12.3
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### ZZZ ### shapely==1.8.5 ## only for DocAI demo
+# scann==1.2.9 ## only for DocAI demo
+### ZZZ ### Pillow==9.5.0 ## only for DocAI demo
+### ZZZ ### pycryptodome ## only for DocAI demo
+# pypdf==3.11.0 ## only for DocAI demo
+# tqdm==4.66.1 ## only for DoCAI demo
+# pandas==2.0.3 ## only for DocAI demo
+### ZZZ ### matplotlib==3.7.1  ## only for DocAI demo
+# google-cloud-documentai==2.16.0 ## only for DocAI demo

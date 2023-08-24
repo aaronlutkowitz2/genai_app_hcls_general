@@ -9,9 +9,12 @@ COPY requirements.txt app/requirements.txt
 
 #install all requirements in requirements.txt
 RUN pip install -r app/requirements.txt 
-# --use-deprecated=legacy-resolver
 RUN pip install --no-dependencies langchain==0.0.242
-# RUN pip3 install aiohttp
+
+#manually install scann
+RUN git clone https://github.com/google-research/google-research/
+RUN python google-research/scann/setup.py install
+RUN pip install scann==1.2.9
 
 #Copy all files in current directory into app directory
 COPY . /app
