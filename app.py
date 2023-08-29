@@ -53,11 +53,13 @@ show_pages(
 
         , Section("Multimodal", ":camera:")
         , Page("pages/Multimodal Imaging.py", "Read Mammogram (Image & Text)")
+        , Page("pages/Speech to Text.py", "Q&A with a Video")
 
         , Section("Code Generation", ":computer:")
         , Page("pages/Write a SQL Query.py", "Write a SQL Query")
 
         # , Section("Under Construction - Come Back Later", ":building_construction:")
         # , Page("pages/Large Doc QA.py", "Large Doc Q&A")
+        
     ]
 )

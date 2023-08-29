@@ -3,6 +3,7 @@ google-cloud-aiplatform==1.28.1
 google-cloud-bigquery==3.11.4
 google-cloud-core==2.3.3
 google-cloud-dialogflow-cx==1.21.0
+google-cloud-speech==2.21.0
 google-cloud-storage==2.5.0
 gcsfs==2023.6.0
 looker_sdk==0.1.3b20
@@ -33,6 +34,7 @@ pytz==2020.1
 pyyaml==5.3.1
 seaborn==0.10.1
 streamlit==1.24.0
+streamlit-player==0.1.5
 st-pages==0.4.3
 # timedelta==2020.12.3
 
