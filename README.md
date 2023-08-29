@@ -3,10 +3,12 @@ General HCLS demo: https://genaihcls-zzsg7awyia-uc.a.run.app/
 # Steps to set up 
 Go to Terminal on local machine
 > cd Documents/ 
+
 > mkdir git_repos
 
 clone repo
 > git clone https://github.com/aaronlutkowitz2/genai_app_hcls_general 
+
 > cd genai_app_hcls_general/
 
 first, test app locally
