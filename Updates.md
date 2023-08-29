@@ -1,4 +1,9 @@
-We will post updates to all of our demos here
+# Version 2023.08.04
+
+Released date: 2023-08-29
+
+**New Demos**
+- *Video Q&A* - [Demo Link](https://genaihcls-zzsg7awyia-uc.a.run.app/Q&A%20with%20a%20Video) -- ask a question of a video, get an answer & the video will play at the exact right timestamp
 
 # Version 2023.08.03 
 

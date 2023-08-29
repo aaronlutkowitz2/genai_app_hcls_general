@@ -26,6 +26,7 @@ from sqlalchemy.schema import *
 
 import streamlit as st
 import streamlit.components.v1 as components
+from streamlit_player import st_player
 import pandas as pd
 import db_dtypes 
 import ast
@@ -63,13 +64,8 @@ st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_gen
 st.divider()
 st.header('30 Second Video')
 
-default_width = 80 
-ratio = 1
-width = max(default_width, 0.01)
-side = max((100 - width) / ratio, 0.01)
-
-_, container, _ = st.columns([side, width, side])
-container.video(data='https://youtu.be/NxlaDk6UYN4')
+video_url = 'https://youtu.be/NxlaDk6UYN4'
+st_player(video_url)
 
 # Architecture
 

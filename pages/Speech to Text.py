@@ -49,23 +49,18 @@ st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
 # # Video
-# st.divider()
-# st.header('30 Second Video')
+st.divider()
+st.header('30 Second Video')
 
-# default_width = 80 
-# ratio = 1
-# width = max(default_width, 0.01)
-# side = max((100 - width) / ratio, 0.01)
-
-# _, container, _ = st.columns([side, width, side])
-# container.video(data='https://youtu.be/-l-lIOrz8Qc')
+video_url = 'https://youtu.be/KiXkBi7Udsg'
+st_player(video_url)
 
 # # Architecture
 
-# st.divider()
-# st.header('Architecture')
+st.divider()
+st.header('Architecture')
 
-# components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vSG53Quz0A7HArZgZbgRwg-uIctSzoND869pjzTHKbgjVr_0riJS4n_8p4E2N4lW1mboLC-B8VxO1Ay/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
+components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vRH7GzAhleSvA9OMX6_ksnsW0iDREHUun8ruLP5iCadV7LwD1AwhkCxnSiEfFPoY-LGixmCstmKrKKd/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
 ################
 ### Select video

@@ -19,6 +19,7 @@ from google.cloud import storage
 # others 
 import streamlit as st
 import streamlit.components.v1 as components
+from streamlit_player import st_player
 import pandas as pd
 from datetime import datetime
 import datetime, pytz
@@ -50,14 +51,8 @@ st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_gen
 # Video
 st.divider()
 st.header('30 Second Video')
-
-default_width = 80 
-ratio = 1
-width = max(default_width, 0.01)
-side = max((100 - width) / ratio, 0.01)
-
-_, container, _ = st.columns([side, width, side])
-container.video(data='https://youtu.be/oWHL3AOMZS0')
+video_url = 'https://youtu.be/oWHL3AOMZS0'
+st_player(video_url)
 
 # Architecture
 

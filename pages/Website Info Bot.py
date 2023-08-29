@@ -30,6 +30,7 @@ from google.api_core.client_options import ClientOptions
 
 import streamlit as st
 import streamlit.components.v1 as components
+from streamlit_player import st_player
 from streamlit.components.v1 import html
 # from components import html
 
@@ -72,14 +73,8 @@ st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_gen
 st.divider()
 st.header('30 Second Video')
 
-default_width = 80 
-ratio = 1
-width = max(default_width, 0.01)
-side = max((100 - width) / ratio, 0.01)
-
-_, container, _ = st.columns([side, width, side])
-container.video(data='https://youtu.be/JTy0MCau3U0')
-
+video_url = 'https://youtu.be/JTy0MCau3U0'
+st_player(video_url)
 
 # Architecture
 
