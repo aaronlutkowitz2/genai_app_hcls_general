@@ -1,39 +1,87 @@
-General HCLS demo: https://genaihcls-zzsg7awyia-uc.a.run.app/
+# Generative AI Healthcare Examples
 
-# Steps to set up 
-Go to Terminal on local machine
-> cd Documents/ 
+A sample application that shows off Generative AI use cases for Healthcare / Life Sciences (HCLS)
 
-> mkdir git_repos
+## Set up 
 
-clone repo
-> git clone https://github.com/aaronlutkowitz2/genai_app_hcls_general 
+Select a directory to clone repo into
 
-> cd genai_app_hcls_general/
+```bash
+git clone https://github.com/aaronlutkowitz2/genai_app_hcls_general 
+cd genai_app_hcls_general/
+```
 
-first, test app locally
-> streamlit run app.py 
+## Requirements
+
+Install requirements, including Streamlit
+
+```bash
+pip install -r requirements.txt
+```
+
+## Test Locally
+
+Optionally, test locally
+
+```bash
+export PROJECT_ID=$(gcloud info --format='value(config.project)')
+
+streamlit run app.py 
+```
+
+
+## Deploy to Google Cloud
+
+Two options, create a docker container and then push the Artifact Registry or directly build & deploy to Cloud Run.
+
+### Create a container locally (optional)
 
 build docker image (you need to install docker first)
-> docker build . -t genai_hcls 
+```bash
+docker build . -t genai_hcls 
+```
 
 login to your GCP account to carry code
-> gcloud auth application-default login 
+
+```bash
+export PROJECT_ID=$(gcloud info --format='value(config.project)')
+gcloud config set project $PROJECT_ID
+gcloud auth application-default login 
+```
+
+### Build with Cloud Build
 
 build docker container on container registry
-> gcloud builds submit --tag gcr.io/cloudadopt/genai_hcls --timeout=2h 
+
+```bash
+export PROJECT_ID=$(gcloud info --format='value(config.project)')
+gcloud builds submit --tag gcr.io/${PROJECT_ID}/genai-hcls
+```
+
+###  Deploy to Cloud Run
 
 Go to Cloud Run in your GCP project, create (or update) an app to point to the newest container in Container Registry --> genai_hcls
 
-# Troubleshoot
+```bash
+gcloud run deploy genai-hcls --image gcr.io/${PROJECT_ID}/genai-hcls --allow-unauthenticated
+```
 
-If there's any auth issues, go to IAM page to add more permissions to the cloud engine service account
+
+## Troubleshooting
+
+If there's any auth issues, go to IAM page to add more permissions to the cloud compute engine service account
 
 If there's an issue with one of the container commands, test that docker code works on docker (locally) 
-> docker run -p 8080:8080 --name test_container genai_hcls
+
+```bash
+docker run -p 8080:8080 --name test_container genai_hcls
+```
 
 Note: you may have to delete test_container first - Then the URL should work with latest code
-> docker rm test_container
+
+```bash
+docker rm test_container
+```
 
 # Other Guides
 https://medium.com/@faizififita1/how-to-deploy-your-streamlit-web-app-to-google-cloud-run-ba776487c5fe
