@@ -17,6 +17,8 @@ from vertexai.language_models import TextGenerationModel
 from vertexai.preview.language_models import ChatModel, InputOutputTextPair
 from google.cloud import storage
 
+import utils_config
+
 # others 
 import streamlit as st
 import streamlit.components.v1 as components
@@ -155,16 +157,17 @@ st.header('3. LLM Prompt & Output')
 custom_prompt = st.text_input('Write your question here', value = "What was the date of this order?")
 
 # Run the model
+# Set project parameters
+PROJECT_ID = utils_config.get_env_project_id()
+LOCATION = utils_config.LOCATION
 
-project_id = "cloudadopt"
-location_id = "us-central1"
 
 import vertexai
 from vertexai.preview.language_models import ChatModel, InputOutputTextPair
 
 vertexai.init(
-      project = project_id
-    , location = location_id)
+      project = PROJECT_ID
+    , location = LOCATION)
 chat_model = ChatModel.from_pretrained(model_id)
 parameters = {
     "temperature": 0.2,
@@ -212,8 +215,8 @@ model_token_limit = 1024
 
 # Run the model
 vertexai.init(
-      project = project_id
-    , location = location_id)
+      project = PROJECT_ID
+    , location = LOCATION)
 parameters = {
     "temperature": model_temperature,
     "max_output_tokens": model_token_limit,

@@ -1,3 +1,17 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -11,21 +25,20 @@ from st_pages import Page, Section, show_pages, add_page_title
 
 # Make page wide
 st.set_page_config(
-    page_title="GCP GenAI",
+    page_title="Google Cloud Generative AI",
     layout="wide",
   )
 
 # Title
-st.title('GCP HCLS GenAI Demos')
+st.title('Google Cloud HCLS Generative AI Demos')
 
 # Author & Date
 st.write('**Author**: Aaron Wilkowitz, aaronwilkowitz@google.com')
 
 # Get started
-st.header('Click on a demo on the left hand side to get started')
+st.write('Click on a demo on the left hand side to get started')
 
 # Gitlink
-st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
 add_page_title() # By default this also adds indentation
@@ -39,23 +52,23 @@ show_pages(
     [
           Page("app.py", "Home", ":house:")
         
-        , Section("Q&A", ":question:")
+        , Section("QUESTION ANSWERING", ":question:")
         , Page("pages/Looker HDE Ask Question.py", "Q&A on HDE / Looker")
         , Page("pages/Supply Chain PO Chat Answers.py", "Q&A on Supply Chain (Purchase Orders)")
         , Page("pages/Website Info Bot.py", "Q&A on Public Websites (Many Documents)")
         
-        , Section("Categorization", ":twisted_rightwards_arrows:")
+        , Section("CATEGORIZATION", ":twisted_rightwards_arrows:")
         , Page("pages/Bariatric Med Record to Struct.py", "Label Sections of Medical Record, to Struct")
         , Page("pages/Imaging Med Record to Struct.py", "Label Medical Imaging for Data Sci Model")
 
-        , Section("Workflow", ":gear:")
+        , Section("WORKFLOW", ":gear:")
         , Page("pages/Doctor_Appt_Concierge.py", "Doctor Appt Scheduling")
 
-        , Section("Multimodal", ":camera:")
+        , Section("MULTIMODAL", ":camera:")
         , Page("pages/Multimodal Imaging.py", "Read Mammogram (Image & Text)")
         , Page("pages/Speech to Text.py", "Q&A with a Video")
 
-        , Section("Code Generation", ":computer:")
+        , Section("CODE GENERATION", ":computer:")
         , Page("pages/Write a SQL Query.py", "Write a SQL Query")
 
         # , Section("Under Construction - Come Back Later", ":building_construction:")

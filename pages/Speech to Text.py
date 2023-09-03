@@ -17,6 +17,8 @@ from google.cloud.speech_v2 import SpeechClient
 from google.cloud.speech_v2.types import cloud_speech
 from google.cloud import storage
 
+import utils_config
+
 # others
 import os
 import streamlit as st
@@ -203,8 +205,9 @@ st.header('3. Ask & Answer Question')
 custom_prompt = st.text_input('Write your question here', value = default_question)
 
 # Model parameters
-project_id = "cloudadopt"
-location_id = "us-central1"
+PROJECT_ID = utils_config.get_env_project_id()
+LOCATION = utils_config.LOCATION
+
 model_id = 'chat-bison@001' 
 model_temperature = 0.2 
 model_token_limit = 200 
@@ -212,8 +215,8 @@ model_top_k = 40
 model_top_p = 0.8
 
 vertexai.init(
-      project = project_id
-    , location = location_id)
+      project = PROJECT_ID
+    , location = LOCATION)
 chat_model = ChatModel.from_pretrained(model_id)
 parameters = {
     "temperature": model_temperature,

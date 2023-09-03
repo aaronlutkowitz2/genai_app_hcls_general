@@ -14,6 +14,8 @@ import vertexai
 from vertexai.preview.language_models import TextGenerationModel
 from google.cloud import bigquery
 
+import utils_config
+
 # # others
 from langchain import SQLDatabase, SQLDatabaseChain
 from langchain.prompts.prompt import PromptTemplate
@@ -122,13 +124,13 @@ What do I need to do?
 
 '''
 
-project_id = "cloudadopt"
-location_id = "us-central1"
+PROJECT_ID = utils_config.get_env_project_id()
+LOCATION = utils_config.LOCATION
 
 # Run the first model
 vertexai.init(
-      project = project_id
-    , location = location_id)
+      project = PROJECT_ID
+    , location = LOCATION)
 parameters = {
     "temperature": model_temperature,
     "max_output_tokens": model_token_limit,
@@ -192,8 +194,8 @@ output:
 '''
 
 vertexai.init(
-    project = project_id
-    , location = location_id)
+    project = PROJECT_ID
+    , location = LOCATION)
 parameters = {
     "temperature": model_temperature,
     "max_output_tokens": model_token_limit,
@@ -231,8 +233,8 @@ if param_doctor == "I am not sure":
     '''
 
     vertexai.init(
-        project = project_id
-        , location = location_id)
+        project = PROJECT_ID
+        , location = LOCATION)
     parameters = {
         "temperature": model_temperature,
         "max_output_tokens": model_token_limit,
@@ -267,10 +269,9 @@ st.write(':blue[**Doctor:**] ' + doctor)
 
 client_bq = bigquery.Client()
 
-project_id = 'cloudadopt'
 dataset_id = 'fake_hospital_data'
 table_id = 'doctor_data_fake_typed'
-table_info = f'`{project_id}.{dataset_id}.{table_id}`'
+table_info = f'`{PROJECT_ID}.{dataset_id}.{table_id}`'
 sql = f"""
 SELECT distinct doctor_type 
 FROM {table_info} 
@@ -287,8 +288,8 @@ I want to see a {doctor}. I need to fill out a form that only allows me to selec
 
 model_token_limit_d = 20 
 vertexai.init(
-    project = project_id
-    , location = location_id)
+    project = PROJECT_ID
+    , location = LOCATION)
 parameters = {
     "temperature": model_temperature,
     "max_output_tokens": model_token_limit_d,
@@ -391,7 +392,7 @@ Do not filter and query for columns that do not exist in the table being queried
 Rule 2:
 Only use the columns in this table: 
 SELECT column_name
-FROM `{project_id}.{dataset_id}`.INFORMATION_SCHEMA.COLUMNS
+FROM `{PROJECT_ID}.{dataset_id}`.INFORMATION_SCHEMA.COLUMNS
 WHERE table_name = "{table_id}"
 
 Rule 3:
@@ -409,8 +410,8 @@ Question: {input}
 """
 
 table_names = [table_id]
-table_uri = f"bigquery://{project_id}/{dataset_id}"
-engine = create_engine(f"bigquery://{project_id}/{dataset_id}")
+table_uri = f"bigquery://{PROJECT_ID}/{dataset_id}"
+engine = create_engine(f"bigquery://{PROJECT_ID}/{dataset_id}")
 
 
 # LLM model
