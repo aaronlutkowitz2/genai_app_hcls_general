@@ -1,3 +1,17 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -14,6 +28,8 @@ from google.cloud import bigquery
 import vertexai
 from vertexai.preview.language_models import TextGenerationModel
 from vertexai.preview.language_models import CodeGenerationModel
+
+import utils_config
 
 # # others
 from langchain import SQLDatabase, SQLDatabaseChain
@@ -57,7 +73,6 @@ st.write('**Date**: 2023-07-24')
 st.write('**Purpose**: You need to ask a question of your data. Have GenAI generate a query in BigQuery')
 
 # Gitlink
-st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
 # Video
@@ -125,9 +140,11 @@ st.header('2. Query information')
 
 # List datasets 
 # project_id = "cloudadopt-public-data"
-project_id = "cloudadopt"
+PROJECT_ID = utils_config.get_env_project_id()
+LOCATION = utils_config.LOCATION
+
 project_id_datasets = "cloudadopt-public-data"
-location_id = "us-central1"
+
 
 client = bigquery.Client(project=project_id_datasets)
 datasets_all = list(client.list_datasets())  # Make an API request.
@@ -155,8 +172,8 @@ engine = create_engine(f"bigquery://{project_id_datasets}/{dataset_id}")
 
 # Vertex 
 vertexai.init(
-    project=project_id
-  , location=location_id
+    project=PROJECT_ID
+  , location=LOCATION
 )
 
 # LLM model

@@ -22,6 +22,25 @@ import requests
 # Location
 LOCATION = "us-central1"
 
+# Chatbot Location: region for CX agent
+CHATBOT_LOCATION = "global"
+
+# Signing service account
+# used in Large Document Question Answering
+SIGNING_SERVICE_ACCOUNT = "837081393813-compute@developer.gserviceaccount.com"  # @param {type:"string"}
+### TODO -- double check if I need this
+
+# """Ensure your user account has the ability to sign URLs using the service account."""
+
+# # Grant Service Account Token Creator role on the signing service acocunt
+# !gcloud iam service-accounts add-iam-policy-binding {SIGNING_SERVICE_ACCOUNT} \
+#   --member=user:{USER_EMAIL} \
+#   --role=roles/iam.serviceAccountTokenCreator \
+#   --billing-project {PROJECT_ID} \
+#   --project {PROJECT_ID} \
+#   -q
+
+
 # Get project ID from metadata
 def get_env_project_id() -> str:
     """Returns the Project ID from GAE or Cloud Run"""

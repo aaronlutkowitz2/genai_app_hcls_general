@@ -1,3 +1,17 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -13,6 +27,8 @@ Creation Date: July 10, 2023
 import vertexai
 from vertexai.preview.language_models import TextGenerationModel
 from vertexai.preview.language_models import ChatModel, InputOutputTextPair
+
+import utils_config
 
 # others
 import streamlit as st
@@ -269,13 +285,13 @@ llm_prompt_display = st.text(llm_prompt)
 st.divider()
 st.header('5. LLM Output')
 
-project_id = "cloudadopt"
-location_id = "us-central1"
+PROJECT_ID = utils_config.get_env_project_id()
+LOCATION = utils_config.LOCATION
 
 # Run the first model
 vertexai.init(
-      project = project_id
-    , location = location_id)
+      project = PROJECT_ID
+    , location = LOCATION)
 parameters = {
     "temperature": model_temperature,
     "max_output_tokens": model_token_limit,

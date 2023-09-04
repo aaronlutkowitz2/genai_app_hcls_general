@@ -1,3 +1,17 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -34,6 +48,8 @@ from google.cloud import aiplatform
 from google.protobuf import struct_pb2
 from google.cloud import bigquery
 import gcsfs
+
+import utils_config
 
 # others
 import streamlit as st
@@ -193,7 +209,8 @@ st.table(df)
 ### define embeddings
 ################
 
-project_id = 'cloudadopt'
+PROJECT_ID = utils_config.get_env_project_id()
+LOCATION = utils_config.LOCATION
 
 # Go to Colab: https://colab.sandbox.google.com/github/tankbattle/hello-world/blob/master/Build_Cloud_CoCa_Image_Embedding_Dataset_%26_Search.ipynb#scrollTo=x2BrVlM-phGN
 # Inspired from https://stackoverflow.com/questions/34269772/type-hints-in-namedtuple.
@@ -245,7 +262,7 @@ class EmbeddingPredictionClient:
       text_embedding=text_embedding,
       image_embedding=image_embedding)
 
-client = EmbeddingPredictionClient(project=project_id)
+client = EmbeddingPredictionClient(project=PROJECT_ID)
 
 # Extract image embedding
 def getImageEmbeddingFromImageContent(content):
