@@ -62,7 +62,6 @@ st.write('**Date**: 2023-07-11')
 st.write('**Purpose**: Hospital has many supply chain PO orders. They need to ask questions against the order')
 
 # Gitlink
-st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
 # Video
@@ -130,9 +129,9 @@ st.header('2. Data')
 
 # Download Files
 client = storage.Client()
-bucket_name = "hcls_genai"
+BUCKET_NAME = utils_config.BUCKET_NAME
 path = 'hcls/supply_chain/'
-bucket = client.bucket(bucket_name)
+bucket = client.bucket(BUCKET_NAME)
 blobs_all = list(bucket.list_blobs(prefix=path))
 
 # Let user select file
@@ -154,7 +153,7 @@ exec(string_full)
 
 file_name = order_id 
 full_file_name = path + file_name
-bucket = client.bucket(bucket_name)
+bucket = client.bucket(BUCKET_NAME)
 blob = str(bucket.blob(full_file_name).download_as_string())
 st.write(':green[**Complete**] File Downloaded')
 st.write(':blue[**Order Data**]')
