@@ -41,6 +41,11 @@ SIGNING_SERVICE_ACCOUNT = "837081393813-compute@developer.gserviceaccount.com"  
 #   -q
 
 
+# HCLS GCS Bucket
+# this is Aaron's public bucket of assets; no need to change this unless you create your own GCS bucket
+BUCKET_NAME = "hcls_genai"
+
+
 # Get project ID from metadata
 def get_env_project_id() -> str:
     """Returns the Project ID from GAE or Cloud Run"""
