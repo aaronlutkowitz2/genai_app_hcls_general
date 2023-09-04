@@ -173,10 +173,10 @@ st.header('2. Create time-marked transcript')
 
 # Pull json from Storage
 client = storage.Client()
-bucket_name = "hcls_genai"
+BUCKET_NAME = utils_config.BUCKET_NAME
 path = "audio_recordings/demo/output/"
 full_file_path = path + output_file_name
-bucket = client.bucket(bucket_name)
+bucket = client.bucket(BUCKET_NAME)
 blob = str(bucket.blob(full_file_path).download_as_string())
 
 # Create json_string

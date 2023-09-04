@@ -175,9 +175,9 @@ PROJECT_ID = utils_config.get_env_project_id()
 LOCATION = utils_config.LOCATION
 
 # Download File
-bucket_name = "hcls_genai"
+BUCKET_NAME = utils_config.BUCKET_NAME
 client = storage.Client()
-bucket = client.bucket(bucket_name)
+bucket = client.bucket(BUCKET_NAME)
 blob = str(bucket.blob(file_name).download_as_string())
 st.write(':green[**Complete**] File Downloaded')
 
