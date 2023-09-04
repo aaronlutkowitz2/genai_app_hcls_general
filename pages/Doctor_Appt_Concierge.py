@@ -69,7 +69,6 @@ st.write('**Date**: 2023-08-22')
 st.write('**Purpose**: Doctor concierge.')
 
 # Gitlink
-st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
 # Video
