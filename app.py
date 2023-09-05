@@ -55,7 +55,7 @@ show_pages(
         , Section("QUESTION AND ANSWER", ":question:")
         , Page("pages/Looker HDE Ask Question.py", "QNA on HDE Looker")
         , Page("pages/Supply Chain PO Chat Answers.py", "QNA on Supply Chain Purchase Orders")
-        , Page("pages/Website Info Bot.py", "Q&A on Public Websites")
+        , Page("pages/Website Info Bot.py", "QNA on Public Websites")
         
         , Section("CATEGORIZATION", ":twisted_rightwards_arrows:")
         , Page("pages/Bariatric Med Record to Struct.py", "Label Medical Record to Struct")
