@@ -1,3 +1,17 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -34,6 +48,8 @@ from google.cloud import aiplatform
 from google.protobuf import struct_pb2
 from google.cloud import bigquery
 import gcsfs
+
+import utils_config
 
 # others
 import streamlit as st
@@ -193,7 +209,8 @@ st.table(df)
 ### define embeddings
 ################
 
-project_id = 'cloudadopt'
+PROJECT_ID = utils_config.get_env_project_id()
+LOCATION = utils_config.LOCATION
 
 # Go to Colab: https://colab.sandbox.google.com/github/tankbattle/hello-world/blob/master/Build_Cloud_CoCa_Image_Embedding_Dataset_%26_Search.ipynb#scrollTo=x2BrVlM-phGN
 # Inspired from https://stackoverflow.com/questions/34269772/type-hints-in-namedtuple.
@@ -245,7 +262,7 @@ class EmbeddingPredictionClient:
       text_embedding=text_embedding,
       image_embedding=image_embedding)
 
-client = EmbeddingPredictionClient(project=project_id)
+client = EmbeddingPredictionClient(project=PROJECT_ID)
 
 # Extract image embedding
 def getImageEmbeddingFromImageContent(content):
@@ -281,7 +298,8 @@ else:
 
 st.write(f"We will now use Vertex AI to create a unique 1048-dimension vector describing this {question_type}")
 
-image_bucket_name = "hcls_genai"
+BUCKET_NAME = utils_config.BUCKET_NAME
+
 # Note: the line below is what you'd actually use to pull embeddings -- but no need to run it everytime -- what I'm using just for the demo is a partial hard-coded embedding
 # embedding = getImageEmbeddingFromGcsObject(image_bucket_name, image_file_name)
 embedding = '[0.0192286577, 0.0154227763, -0.00861405395, -0.0110541359, 0.00163213036, 0.0169473756, 0.0313014351, 0.0117419316, -0.0133915171, -0.0278525781, -0.0225973539, -0.0145366518, -0.00996714551, 0.0100956941, -0.0322998278, 0.00426189415, 0.000678597658, 0.00289598852, 0.043383915, -0.0168046039, -0.0338218361, 0.0273827296, -0.0387609936, 0.0243778713, -0.017838059, 0.0262691453, 0.0141063891, 0.0187563412, 0.00534455059, -0.0493374169, 0.0303051434, -0.0160473026, -0.0371797644, 0.00692701759, 0.0283875391, 0.0137267867, -0.031491518, -0.00344658154, -0.0162953809, 0.0282125603, 0.0195857305, 0.000363359926, -0.00886089, -0.0321243443, -0.0129843829, -0.0413851812, 0.00696028071, -0.00951314904, 0.00556926243, -0.00392219285, 0.0123352194, -0.00571729336, -0.0315009, -0.0318648852, 0.0276487563, -0.00751679204, -0.0159519389, -0.0142956199, -0.0331410542, -0.0134425694, -0.0391240343, -0.029512519, -0.0197206736, 0.00707804412, -0.00492096599, -0.00647117896, -0.0617857724, 0.018267259, 0.00858118385, -0.0132169547, -0.0118825734, -0.0259654224, 0.0140632382, 0.0322629586, -0.0155665344, 0.00599491037, -0.00619707862, -0.010116837, 0.014256373, 0.00291279797, -0.0188439488, -0.0233990755, -0.0196359698, 0.0290332343, 0.0343161412, 0.011853938, -0.0242382586, -0.0174036417, 0.0190506708, 0.0239307974, 0.0375967883, 0.00169354863, -0.00696445908, -0.212390184, -0.0393398367, -0.00412424514, 0.0287610441, -0.0191484429, -0.0194245372, 0.036573682, 0.00335917715, 0.0283351112, 0.00356064108, -0.00763658434, 0.0164249223, -0.0351715796, 0.0103293359, 0.0342771858, 0.0513855182, 0.0299044587, 0.00864771195, -0.00549998507, -0.0343904719, 0.053017538, -0.0121561456, -0.00862567406, -0.0286054928, -0.00373028382, 0.0181783382, -0.0164996106, 0.000548590499, -0.0232111346, -0.0140768243, -0.0108239083, -0.0181836095, -0.0924405232, -0.0562132485, 0.0230981708, -0.0188030675, -0.0289928503, -0.000302867556, -0.00210259855, 0.0382087156, -0.0170394182, -0.0265383273, -0.000453168206, 0.0123043815, 0.0101008462, 0.00863749906, 0.00581911532, -0.0136427572, 0.0227771848, -0.0166442432, -0.015468156, 0.0328641944, -0.0121320169, 0.010943478, 0.0164464042, 0.0587355979, -0.0292913243, 0.0260012206, -0.0259103961, -0.00273697358, -0.0440225638, -0.0198445078, 0.0131408246, -0.00456004776, -0.0125101386, 0.0281321425, -0.00958281476, -0.0104698669, 0.00703377603, -0.0381017551, -0.0235447641, -0.00269313878, -0.00408230396, -0.00427079573, 0.00809079502, 0.00154427579, -0.0168978013, -0.00532221142, -0.0203234, 0.00934536103, -0.00743831834, -0.00404534582, -0.00416333741, 0.00497120526, 0.0105548538, -0.0134845609, -0.0241767615, -0.0119690448, 0.0243872032, -0.0192877501, 0.00852868706, -0.0427979454, -0.00119108474]'

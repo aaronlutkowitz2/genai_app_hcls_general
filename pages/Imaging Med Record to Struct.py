@@ -1,3 +1,17 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -12,6 +26,8 @@ Creation Date: July 10, 2023
 # gcp
 import vertexai
 from vertexai.preview.language_models import TextGenerationModel
+
+import utils_config
 
 # others
 import streamlit as st
@@ -42,7 +58,6 @@ st.write('**Date**: 2023-06-22')
 st.write('**Purpose**: Data science models needs to take in radiologist imaging summary & convert that to many yes/no labels for data science training.')
 
 # Gitlink
-st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
 # Video
@@ -172,13 +187,13 @@ st.write(':blue[**Prompt 1:**] ')
 llm_prompt_a_display = st.text(input_prompt_a_1_context + input_prompt_a_2_examples + input_prompt_a_3_input + input_prompt_a_4_output)
 llm_prompt_a = input_prompt_a_1_context + input_prompt_a_2_examples + input_prompt_a_3_input + input_prompt_a_4_output
 
-project_id = "cloudadopt"
-location_id = "us-central1"
+PROJECT_ID = utils_config.get_env_project_id()
+LOCATION = utils_config.LOCATION
 
 # Run the first model
 vertexai.init(
-      project = project_id
-    , location = location_id)
+      project = PROJECT_ID
+    , location = LOCATION)
 parameters = {
     "temperature": model_temperature,
     "max_output_tokens": model_token_limit,
@@ -349,8 +364,8 @@ for indexA, valueA in enumerate(list_of_labels_to_create):
 
   # Run the first model
   vertexai.init(
-        project = project_id
-      , location = location_id)
+        project = PROJECT_ID
+      , location = LOCATION)
   parameters = {
       "temperature": model_temperature,
       "max_output_tokens": model_token_limit,

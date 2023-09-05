@@ -1,3 +1,17 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -18,6 +32,8 @@ from google.cloud.dialogflowcx_v3beta1.services.agents import AgentsClient
 from google.cloud.dialogflowcx_v3beta1.services.sessions import SessionsClient
 from google.cloud.dialogflowcx_v3beta1.types import session
 from google.api_core.client_options import ClientOptions
+
+import utils_config
 
 # # # others
 # from langchain import SQLDatabase, SQLDatabaseChain
@@ -66,7 +82,6 @@ st.write('**Date**: 2023-08-01')
 st.write('**Purpose**: Pick a website and ask questions against that website')
 
 # Gitlink
-st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
 # Video
@@ -83,19 +98,22 @@ st.header('Architecture')
 
 components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vSGOsHT0tvCBZRQg7JoO317aJuzJF6x3szoTDCZhShRxY7MifnixzmHs_-2aKeOp5t1galMvczqpOWv/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
+PROJECT_ID = utils_config.get_env_project_id()
+LOCATION = utils_config.CHATBOT_LOCATION
+
 ################
 ### Define function
 ################
 
-def detect_intent_texts(agent, session_id, texts, language_code, location_id):
+def detect_intent_texts(agent, session_id, texts, language_code, location):
     
-    agent = f"projects/{project_id}/locations/{location_id}/agents/{agent_id}"
+    agent = f"projects/{PROJECT_ID}/locations/{location}/agents/{agent_id}"
     session_path = f"{agent}/sessions/{session_id}"
     agent_components = AgentsClient.parse_agent_path(agent)
     
     # location_id = agent_components["location"]
-    if location_id != "global":
-        api_endpoint = f"{location_id}-dialogflow.googleapis.com:443"
+    if location != "global":
+        api_endpoint = f"{location}-dialogflow.googleapis.com:443"
         print(f"API Endpoint: {api_endpoint}\n")
         client_options = {"api_endpoint": api_endpoint}
         # st.write("API Endpoint " + api_endpoint)
@@ -186,13 +204,10 @@ st.header('Select question')
 
 custom_prompt = st.text_input('Write your question here', value = "What is " + website_name + "?")
 
-project_id = "cloudadopt" 
-location_id = "global"
-
 session_id = uuid.uuid4()
 texts = [custom_prompt]
 language_code = "en-us"
-detect_intent_texts(agent_id, session_id, texts, language_code, location_id)
+detect_intent_texts(agent_id, session_id, texts, language_code, LOCATION)
 
 
 

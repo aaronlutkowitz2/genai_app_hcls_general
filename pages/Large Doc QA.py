@@ -1,3 +1,17 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -16,6 +30,8 @@ from google.auth import default
 from google.auth import impersonated_credentials
 from google.cloud import documentai, storage
 import vertexai
+
+import utils_config
 
 # Langchain 
 from langchain.chains.question_answering import load_qa_chain
@@ -72,10 +88,9 @@ st.write('**Original code from**: Ayo Adedeji, ayoad@google.com')
 # Original file is located at https://colab.research.google.com/drive/1YUae5R6GwzQbFG__LJRXfrR7vUUTCIxk?resourcekey=0-MZCdofdacgZJKfuNHTimug
 
 st.write('**Date**: 2023-08-16')
-st.write('**Purpose**: Use DocAI + GenAI + ScaNN to answer a question against a large document')
+st.write('**Purpose**: Use DocAI + Generative AI + ScaNN to answer a question against a large document')
 
 # Gitlink
-st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
 # Video
@@ -100,26 +115,12 @@ st.header('Architecture')
 # As a result, a service account will be used that signs the URLs (this step cannot be performed using user credentials).
 
 USER_EMAIL = "aaronwilkowitz@google.com"  # @param {type:"string"}
-PROJECT_ID = "cloudadopt"  # @param {type:"string"}
-REGION = "us-central1"  # @param {type:"string"}
+PROJECT_ID = utils_config.get_env_project_id() # @param {type:"string"}
+LOCATION = utils_config.LOCATION # @param {type:"string"}
+SIGNING_SERVICE_ACCOUNT = utils_config.SIGNING_SERVICE_ACCOUNT  # @param {type:"string"}
 
-### TODO -- update this later
 
-SIGNING_SERVICE_ACCOUNT = "837081393813-compute@developer.gserviceaccount.com"  # @param {type:"string"}
-
-### TODO -- double check if I need this
-
-# """Ensure your user account has the ability to sign URLs using the service account."""
-
-# # Grant Service Account Token Creator role on the signing service acocunt
-# !gcloud iam service-accounts add-iam-policy-binding {SIGNING_SERVICE_ACCOUNT} \
-#   --member=user:{USER_EMAIL} \
-#   --role=roles/iam.serviceAccountTokenCreator \
-#   --billing-project {PROJECT_ID} \
-#   --project {PROJECT_ID} \
-#   -q
-
-vertexai.init(project=PROJECT_ID, location=REGION)
+vertexai.init(project=PROJECT_ID, location=LOCATION)
 
 ################
 ### set classes

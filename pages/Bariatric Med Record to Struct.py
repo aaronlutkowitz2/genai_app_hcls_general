@@ -1,3 +1,17 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -15,6 +29,8 @@ from google.protobuf.struct_pb2 import Value
 import vertexai
 from vertexai.language_models import TextGenerationModel
 from google.cloud import storage
+
+import utils_config
 
 # others 
 import streamlit as st
@@ -45,7 +61,6 @@ st.write('**Date**: 2023-06-21')
 st.write('**Purpose**: Hospital needs to know if a patient has ever had a history of bariatric surgery at another hospital system, by reviewing a patient\'s CCDA document.')
 
 # Gitlink
-st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
 # Video
@@ -155,12 +170,14 @@ else:
 st.write(':blue[**File ID:**] ' + file_id)
 st.write(':blue[**File Name:**] ' + file_name)
 
+# Project & Location
+PROJECT_ID = utils_config.get_env_project_id()
+LOCATION = utils_config.LOCATION
+
 # Download File
-project_id = "cloudadopt"
-location_id = "us-central1"
-bucket_name = "hcls_genai"
+BUCKET_NAME = utils_config.BUCKET_NAME
 client = storage.Client()
-bucket = client.bucket(bucket_name)
+bucket = client.bucket(BUCKET_NAME)
 blob = str(bucket.blob(file_name).download_as_string())
 st.write(':green[**Complete**] File Downloaded')
 
@@ -278,8 +295,8 @@ while i <= num_sections :
         # Run the model
 
         vertexai.init(
-              project = project_id
-            , location = location_id)
+              project = PROJECT_ID
+            , location = LOCATION)
         parameters = {
             "temperature": model_temperature,
             "max_output_tokens": model_token_limit,
