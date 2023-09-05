@@ -52,21 +52,21 @@ show_pages(
     [
           Page("app.py", "Home", ":house:")
         
-        , Section("QUESTION ANSWERING", ":question:")
-        , Page("pages/Looker HDE Ask Question.py", "Q&A on HDE / Looker")
-        , Page("pages/Supply Chain PO Chat Answers.py", "Q&A on Supply Chain (Purchase Orders)")
-        , Page("pages/Website Info Bot.py", "Q&A on Public Websites (Many Documents)")
+        , Section("QUESTION AND ANSWER", ":question:")
+        , Page("pages/Looker HDE Ask Question.py", "QNA on HDE Looker")
+        , Page("pages/Supply Chain PO Chat Answers.py", "QNA on Supply Chain Purchase Orders")
+        , Page("pages/Website Info Bot.py", "Q&A on Public Websites")
         
         , Section("CATEGORIZATION", ":twisted_rightwards_arrows:")
-        , Page("pages/Bariatric Med Record to Struct.py", "Label Sections of Medical Record, to Struct")
+        , Page("pages/Bariatric Med Record to Struct.py", "Label Medical Record to Struct")
         , Page("pages/Imaging Med Record to Struct.py", "Label Medical Imaging for Data Sci Model")
 
         , Section("WORKFLOW", ":gear:")
         , Page("pages/Doctor_Appt_Concierge.py", "Doctor Appt Scheduling")
 
         , Section("MULTIMODAL", ":camera:")
-        , Page("pages/Multimodal Imaging.py", "Read Mammogram (Image & Text)")
-        , Page("pages/Speech to Text.py", "Q&A with a Video")
+        , Page("pages/Multimodal Imaging.py", "Read Mammogram Image & Text")
+        , Page("pages/Speech to Text.py", "QNA with a Video")
 
         , Section("CODE GENERATION", ":computer:")
         , Page("pages/Write a SQL Query.py", "Write a SQL Query")
