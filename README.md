@@ -87,3 +87,20 @@ docker rm test_container
 https://medium.com/@faizififita1/how-to-deploy-your-streamlit-web-app-to-google-cloud-run-ba776487c5fe
 
 https://medium.com/analytics-vidhya/deploying-streamlit-apps-to-google-app-engine-in-5-simple-steps-5e2e2bd5b172
+
+# Aaron notes (ignore these)
+```bash
+docker build . -t genai_hcls
+```
+
+```bash
+gcloud builds submit --tag gcr.io/cloudadopt/genai_hcls --timeout=2h
+```
+
+```bash
+docker build . -t genai_hca
+```
+
+```bash
+gcloud builds submit --tag gcr.io/cloudadopt/genai_hca --timeout=2h 
+```
