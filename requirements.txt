@@ -8,6 +8,7 @@ google-cloud-storage==2.5.0
 gcsfs==2023.6.0
 looker_sdk==0.1.3b20
 vertexai==0.0.1
+google-cloud-discoveryengine==0.11.1
 
 ### langchain ###
 aiohttp==3.8.5
@@ -39,12 +40,20 @@ st-pages==0.4.3
 
 
 
-### ZZZ ### shapely==1.8.5 ## only for DocAI demo
-# scann==1.2.9 ## only for DocAI demo
-### ZZZ ### Pillow==9.5.0 ## only for DocAI demo
-### ZZZ ### pycryptodome ## only for DocAI demo
-# pypdf==3.11.0 ## only for DocAI demo
-# tqdm==4.66.1 ## only for DoCAI demo
+### ZZZ ### 
+shapely==1.8.5 ## only for DocAI demo
+### ZZZ ### # scann==1.2.9 ## only for DocAI demo
+### ZZZ ### 
+Pillow==9.5.0 ## only for DocAI demo
+### ZZZ ### 
+pycryptodome ## only for DocAI demo
+### ZZZ ### 
+pypdf==3.11.0 ## only for DocAI demo
+### ZZZ ### # 
+tqdm==4.66.1 ## only for DoCAI demo
+### ZZZ ###
 # pandas==2.0.3 ## only for DocAI demo
-### ZZZ ### matplotlib==3.7.1  ## only for DocAI demo
-# google-cloud-documentai==2.16.0 ## only for DocAI demo
+### ZZZ ### 
+matplotlib==3.7.1  ## only for DocAI demo
+### ZZZ ### 
+google-cloud-documentai==2.16.0 ## only for DocAI demo

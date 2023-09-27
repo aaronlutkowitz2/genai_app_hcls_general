@@ -104,3 +104,11 @@ docker build . -t genai_hca
 ```bash
 gcloud builds submit --tag gcr.io/cloudadopt/genai_hca --timeout=2h 
 ```
+
+```bash 
+virtualenv -p python3 venv
+```
+
+```bash 
+source venv/bin/activate
+```

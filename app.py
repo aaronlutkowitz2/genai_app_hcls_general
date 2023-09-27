@@ -55,7 +55,6 @@ show_pages(
         , Section("QUESTION AND ANSWER", ":question:")
         , Page("pages/Looker HDE Ask Question.py", "QNA on HDE Looker")
         , Page("pages/Supply Chain PO Chat Answers.py", "QNA on Supply Chain Purchase Orders")
-        # , Page("pages/Website Info Bot.py", "QNA on Public Websites")
         
         , Section("CATEGORIZATION", ":twisted_rightwards_arrows:")
         , Page("pages/Bariatric Med Record to Struct.py", "Label Medical Record to Struct")
@@ -69,10 +68,13 @@ show_pages(
         , Page("pages/Speech to Text.py", "QNA with a Video")
 
         , Section("CODE GENERATION", ":computer:")
+        , Page("pages/Looker Explore Generator.py", "Looker Query Generator")
         , Page("pages/Write a SQL Query.py", "Write a SQL Query")
 
         # , Section("Under Construction - Come Back Later", ":building_construction:")
         # , Page("pages/Large Doc QA.py", "Large Doc Q&A")
+        # , Page("pages/Vertex Search Large Docs.py", "Large Doc QNA")
+        
         
     ]
 )

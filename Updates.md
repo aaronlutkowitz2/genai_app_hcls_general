@@ -1,3 +1,10 @@
+# Version 2023.09.01
+
+Released date: 2023-09-27
+
+**New Demos**
+- *Lookeer Query Generation* - [Demo Link](https://genaihcls-zzsg7awyia-uc.a.run.app/Looker%20Query%20Generator) -- ask a question, generate a Looker query & visualiiziation
+
 # Version 2023.08.04
 
 Released date: 2023-08-29
