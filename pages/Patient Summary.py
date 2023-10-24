@@ -32,6 +32,7 @@ from google.cloud import storage
 # others
 import streamlit as st
 import streamlit.components.v1 as components
+from streamlit_player import st_player
 import pandas as pd
 import json 
 from datetime import datetime, timedelta
@@ -62,8 +63,8 @@ st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_gen
 st.divider()
 st.header('60 Second Video')
 
-# video_url = 'https://youtu.be/b7JXKP2-dFQ'
-# st_player(video_url)
+video_url = 'https://youtu.be/JMyGfydQGzk'
+st_player(video_url)
 
 # Architecture
 

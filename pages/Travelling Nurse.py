@@ -77,10 +77,10 @@ st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_gen
 
 # Video
 st.divider()
-st.header('60 Second Video')
+st.header('30 Second Video')
 
-# video_url = 'https://youtu.be/b7JXKP2-dFQ'
-# st_player(video_url)
+video_url = 'https://youtu.be/RykB-zQfDjE'
+st_player(video_url)
 
 # Architecture
 
@@ -206,7 +206,16 @@ def main():
   # addresses = data['addresses']
   # API_key = data['API_key']
   distance_matrix = create_distance_matrix(data)
-  st.write(distance_matrix)
+  show_distance_matrix = st.selectbox(
+    'Show distance matrix?'
+    , (
+          "Yes"
+        , "No"
+      )
+    , index = 1 
+  )
+  if show_distance_matrix == 'Yes':
+    st.write(distance_matrix)
   st.write(":blue[step]: distance matrix :green[done]")
   return distance_matrix
 if __name__ == '__main__':
