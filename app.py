@@ -56,25 +56,28 @@ show_pages(
         , Page("pages/Looker HDE Ask Question.py", "QNA on HDE Looker")
         , Page("pages/Supply Chain PO Chat Answers.py", "QNA on Supply Chain Purchase Orders")
         
+        , Section("SUMMARIZATION", ":books:")
+        , Page("pages/Patient Summary.py", "Generate Patient Summary")
+        , Page("pages/Highlight Demo.py", "Highlight Demo")
+
         , Section("CATEGORIZATION", ":twisted_rightwards_arrows:")
         , Page("pages/Bariatric Med Record to Struct.py", "Label Medical Record to Struct")
         , Page("pages/Imaging Med Record to Struct.py", "Label Medical Imaging for Data Sci Model")
 
         , Section("WORKFLOW", ":gear:")
         , Page("pages/Doctor_Appt_Concierge.py", "Doctor Appt Scheduling")
+        , Page("pages/Travelling Nurse.py", "Map Route for Travelling Nurse")
 
         , Section("MULTIMODAL", ":camera:")
         , Page("pages/Multimodal Imaging.py", "Read Mammogram Image & Text")
         , Page("pages/Speech to Text.py", "QNA with a Video")
 
         , Section("CODE GENERATION", ":computer:")
-        , Page("pages/Looker Explore Generator.py", "Looker Query Generator")
-        , Page("pages/Write a SQL Query.py", "Write a SQL Query")
+        , Page("pages/Looker Explore Generator.py", "Text 2 Looker")
+        , Page("pages/Write a SQL Query.py", "Text 2 SQL")
 
         # , Section("Under Construction - Come Back Later", ":building_construction:")
         # , Page("pages/Large Doc QA.py", "Large Doc Q&A")
         # , Page("pages/Vertex Search Large Docs.py", "Large Doc QNA")
-        
-        
     ]
 )

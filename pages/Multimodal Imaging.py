@@ -88,7 +88,7 @@ st.write('**Date**: 2023-08-02')
 st.write('**Purpose**: Use Multimodal model to predict cancer detection')
 
 # Gitlink
-st.write('**Go Link (Googlers)**: go/hclsgenai')
+# st.write('**Go Link (Googlers)**: go/hclsgenai')
 st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_general')
 
 # Video
