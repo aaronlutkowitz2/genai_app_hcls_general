@@ -1,9 +1,18 @@
+# Version 2023.10.01
+
+Released date: 2023-10-24
+
+**New Demos**
+- *Generate Patient Summary* - [Demo Link](https://genaihcls-zzsg7awyia-uc.a.run.app/Generate%20Patient%20Summary) -- generate a patient summary, check for hallucinations
+- *Highlight Relevant Text* - [Demo Link](https://genaihcls-zzsg7awyia-uc.a.run.app/Highlight%20Demo) -- highlight relevant text from a document
+- *Map Out Nurse's Route* - [Demo Link](https://genaihcls-zzsg7awyia-uc.a.run.app/Map%20Route%20for%20Travelling%20Nurse) -- map out fastest route for a travelling nurse visiting many locations
+
 # Version 2023.09.01
 
 Released date: 2023-09-27
 
 **New Demos**
-- *Lookeer Query Generation* - [Demo Link](https://genaihcls-zzsg7awyia-uc.a.run.app/Looker%20Query%20Generator) -- ask a question, generate a Looker query & visualiiziation
+- *Looker Query Generation* - [Demo Link](https://genaihcls-zzsg7awyia-uc.a.run.app/Looker%20Query%20Generator) -- ask a question, generate a Looker query & visualiiziation
 
 # Version 2023.08.04
 
