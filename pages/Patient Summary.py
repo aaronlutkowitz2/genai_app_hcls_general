@@ -36,6 +36,7 @@ from streamlit_player import st_player
 import pandas as pd
 import json 
 from datetime import datetime, timedelta
+import utils_config
 
 ################
 ### page intro
@@ -105,8 +106,8 @@ components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vTb_Qe8AqxFZ9
 ################
 
 # Define parameters
-project_id = "cloudadopt"
-location_id = "us-central1"
+PROJECT_ID = utils_config.get_env_project_id()
+LOCATION = utils_config.LOCATION
 
 # Define model
 model_id = 'text-bison' 
@@ -257,8 +258,8 @@ def section2_generate_elements():
         model_token_limit = 200
         # Run the LLM
         vertexai.init(
-            project = project_id
-            , location = location_id)
+            project = PROJECT_ID
+            , location = LOCATION)
         parameters = {
             "temperature": model_temperature,
             "max_output_tokens": model_token_limit,
@@ -309,8 +310,8 @@ def section2_generate_elements():
             model_token_limit = 5
             # Run the LLM
             vertexai.init(
-                project = project_id
-                , location = location_id)
+                project = PROJECT_ID
+                , location = LOCATION)
             parameters = {
                 "temperature": model_temperature,
                 "max_output_tokens": model_token_limit,
@@ -360,8 +361,8 @@ def section2_generate_elements():
             model_token_limit = 100
             # Run the LLM
             vertexai.init(
-                project = project_id
-                , location = location_id)
+                  project = PROJECT_ID
+                , location = LOCATION)
             parameters = {
                 "temperature": model_temperature,
                 "max_output_tokens": model_token_limit,
@@ -400,8 +401,8 @@ def section2_generate_elements():
             model_token_limit = 5
             # Run the LLM
             vertexai.init(
-                project = project_id
-                , location = location_id)
+                  project = PROJECT_ID
+                , location = LOCATION)
             parameters = {
                 "temperature": model_temperature,
                 "max_output_tokens": model_token_limit,
@@ -694,8 +695,8 @@ def section3_labs_vitals_meds():
         model_token_limit = 5
         # Run the LLM
         vertexai.init(
-            project = project_id
-            , location = location_id)
+              project = PROJECT_ID
+            , location = LOCATION)
         parameters = {
             "temperature": model_temperature,
             "max_output_tokens": model_token_limit,
@@ -905,8 +906,8 @@ Patient Details:
     model_token_limit = 200
     # Run the LLM
     vertexai.init(
-        project = project_id
-        , location = location_id)
+        project = PROJECT_ID
+        , location = LOCATION)
     parameters = {
         "temperature": model_temperature,
         "max_output_tokens": model_token_limit,

@@ -11,6 +11,17 @@ COPY requirements.txt app/requirements.txt
 RUN pip install -r app/requirements.txt 
 RUN pip install --no-dependencies langchain==0.0.242
 
+### Potential scribbles additionals
+# RUN apt-get update && apt-get install -y \
+#     libasound2-dev \
+#     portaudio19-dev \
+#     libportaudio2 \
+#     libportaudiocpp0 \
+#     ffmpeg
+# # Install any needed packages specified in requirements.txt
+# RUN pip install --no-cache-dir -r requirements.txt
+
+
 #Copy all files in current directory into app directory
 COPY . /app
 

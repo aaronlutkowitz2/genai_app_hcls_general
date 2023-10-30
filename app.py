@@ -67,6 +67,7 @@ show_pages(
         , Section("WORKFLOW", ":gear:")
         , Page("pages/Doctor_Appt_Concierge.py", "Doctor Appt Scheduling")
         , Page("pages/Travelling Nurse.py", "Map Route for Travelling Nurse")
+        , Page("pages/Scribbles Transcription.py", "Dr. Scribbles - Medical Transcription")
 
         , Section("MULTIMODAL", ":camera:")
         , Page("pages/Multimodal Imaging.py", "Read Mammogram Image & Text")
