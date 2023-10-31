@@ -276,10 +276,6 @@ input_file_path = path + input_file_name
 blob = bucket.blob(input_file_path)
 audio_name = "audio_data.mp3"
 blob.download_to_filename(audio_name)
-# audio_data = blob.download_as_bytes()
-# audio_file = open(audio_data, 'rb')
-# audio_bytes = audio_file.read()
-# audio_segment = AudioSegment.from_wav(io.BytesIO(audio_data))
 
 # Download transcript as blob & deal with it
 output_file_name = "recording2_transcript_6597e0aa-0000-20c9-bf3b-d4f547f5ae6c.json"

@@ -51,31 +51,29 @@ add_page_title() # By default this also adds indentation
 show_pages(
     [
           Page("app.py", "Home", ":house:")
-        
-        , Section("QUESTION AND ANSWER", ":question:")
+
+        , Section("Provider", ":female-doctor:")
+        , Page("pages/Travelling Nurse.py", "A. Plan - Map Route")
+        , Page("pages/Patient Summary.py", "B. Before - Generate Patient Summary")
+        , Page("pages/Scribbles Transcription.py", "C. During - Transcribe Encounter")
+        , Page("pages/Multimodal Imaging.py", "D. After - Read Mammogram Image & Text")
+
+        , Section("Patient", ":hospital:")
+        , Page("pages/Doctor_Appt_Concierge.py", "Doctor Appt Scheduling")
+
+        , Section("HQ QNA", ":office:")
         , Page("pages/Looker HDE Ask Question.py", "QNA on HDE Looker")
         , Page("pages/Supply Chain PO Chat Answers.py", "QNA on Supply Chain Purchase Orders")
-        
-        , Section("SUMMARIZATION", ":books:")
-        , Page("pages/Patient Summary.py", "Generate Patient Summary")
-        , Page("pages/Highlight Demo.py", "Highlight Demo")
-
-        , Section("CATEGORIZATION", ":twisted_rightwards_arrows:")
-        , Page("pages/Bariatric Med Record to Struct.py", "Label Medical Record to Struct")
-        , Page("pages/Imaging Med Record to Struct.py", "Label Medical Imaging for Data Sci Model")
-
-        , Section("WORKFLOW", ":gear:")
-        , Page("pages/Doctor_Appt_Concierge.py", "Doctor Appt Scheduling")
-        , Page("pages/Travelling Nurse.py", "Map Route for Travelling Nurse")
-        , Page("pages/Scribbles Transcription.py", "Dr. Scribbles - Medical Transcription")
-
-        , Section("MULTIMODAL", ":camera:")
-        , Page("pages/Multimodal Imaging.py", "Read Mammogram Image & Text")
         , Page("pages/Speech to Text.py", "QNA with a Video")
 
-        , Section("CODE GENERATION", ":computer:")
+        , Section("Coders", ":computer:")
         , Page("pages/Looker Explore Generator.py", "Text 2 Looker")
         , Page("pages/Write a SQL Query.py", "Text 2 SQL")
+
+        , Section("Researchers", ":eyeglasses:")
+        , Page("pages/Bariatric Med Record to Struct.py", "Sturcture the Medical Record")
+        , Page("pages/Imaging Med Record to Struct.py", "Label Medical Imaging for Data Sci Model")
+        , Page("pages/Highlight Demo.py", "Highlight a Document")
 
         # , Section("Under Construction - Come Back Later", ":building_construction:")
         # , Page("pages/Large Doc QA.py", "Large Doc Q&A")
