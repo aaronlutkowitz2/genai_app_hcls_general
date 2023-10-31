@@ -52,17 +52,18 @@ show_pages(
     [
           Page("app.py", "Home", ":house:")
 
-        , Section("Provider", ":female-doctor:")
+        , Section("Provider", ":hospital:")
         , Page("pages/Travelling Nurse.py", "A. Plan - Map Route")
         , Page("pages/Patient Summary.py", "B. Before - Generate Patient Summary")
+        , Page("pages/Looker HDE Ask Question.py", "B. Before - Chat w/ HDE Medical Record")
         , Page("pages/Scribbles Transcription.py", "C. During - Transcribe Encounter")
         , Page("pages/Multimodal Imaging.py", "D. After - Read Mammogram Image & Text")
 
-        , Section("Patient", ":hospital:")
+        , Section("Patient", ":female-doctor:")
         , Page("pages/Doctor_Appt_Concierge.py", "Doctor Appt Scheduling")
 
         , Section("HQ QNA", ":office:")
-        , Page("pages/Looker HDE Ask Question.py", "QNA on HDE Looker")
+        
         , Page("pages/Supply Chain PO Chat Answers.py", "QNA on Supply Chain Purchase Orders")
         , Page("pages/Speech to Text.py", "QNA with a Video")
 

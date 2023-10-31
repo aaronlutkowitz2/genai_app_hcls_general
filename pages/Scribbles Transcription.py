@@ -69,12 +69,12 @@ st.set_page_config(
   )
 
 # Title
-st.title('Dr. Scribbles: Doctor-Patient Transcription')
+st.title('Transcribe Doctor-Patient Encounter & Provide Recommendations')
 
 # Author & Date
 st.write('**Author**: Aaron Wilkowitz')
 st.write('**Date**: 2023-10-24')
-st.write('**Purpose**: Dr. Scribbles: Doctor-Patient Transcription')
+st.write('**Purpose**: Transcribe Doctor-Patient Encounter & Provide Recommendations')
 
 # Gitlink
 # st.write('**Go Link (Googlers)**: go/hclsgenai')
@@ -180,13 +180,11 @@ output:
 - language_code:               en-us \n
 - original transcript:         Good afternoon. How can I assist you today? \n
 - LLM corrected transcript:    Good afternoon. How can I assist you today? \n
-- LLM confidence:              97% \n
 -------------------------------------------------------------------------------- \n
 - LLM predicted speaker:       Patient \n
 - language_code:               en-us  \n
 - original transcript:         Hi doctor. I\'ve been experiencing a persistent cough for the past week, and it\'s not getting any better. \n
 - LLM corrected transcript:    Hi doctor. I\'ve been experiencing a persistent cough for the past week, and it\'s not getting any better. \n
-- LLM confidence:              100% \n
 
 input: 
 transcript:    Hmm. I see have you noticed any other symptoms accompanying the call any fever chest pain?
@@ -197,7 +195,6 @@ output:
 - language_code:               en-us \n
 - original transcript:         Hmm. I see have you noticed any other symptoms accompanying the call any fever chest pain? or shortness of breath \n
 - LLM corrected transcript:    Hmm. I see have you noticed any other symptoms accompanying the cough? Any fever, chest pain, or shortness of breath? \n
-- LLM confidence:              98% \n
 
 input: 
 transcript:    You know, I haven\'t had a fever or chest pain, but I do feel a bit short of breath when the coughing fits occur.
@@ -208,7 +205,6 @@ output:
 - language_code:               en-us \n
 - original transcript:         You know, I haven\'t had a fever or chest pain, but I do feel a bit short of breath when the coughing fits occur. especially during physical activities \n
 - LLM corrected transcript:    You know, I haven\'t had a fever or chest pain, but I do feel a bit short of breath when the coughing fits occur. Especially during physical activities. \n
-- LLM confidence:              98% \n
 
 input: 
 transcript:    I understand.
@@ -219,7 +215,6 @@ output:
 - language_code:               en-us \n
 - original transcript:         I understand. Have you been in contact with anyone who has been sick recently? \n
 - LLM corrected transcript:    I understand. Have you been in contact with anyone who has been sick recently? \n
-- LLM confidence:              98% \n
 """
 
 prompt_medical_advice = """
@@ -264,6 +259,8 @@ Recommended Tasks:
 ### Section: Run Audio Loop
 ################
 
+st.divider()
+
 # Storage values
 client = storage.Client()
 BUCKET_NAME = utils_config.BUCKET_NAME
@@ -301,7 +298,7 @@ for index, value in enumerate(json_object2):
     st.audio(audio_name, format="audio/mp3", start_time=timestamp_floor)
     
     # Show transcript values
-    st.write(":blue[Transcript (Original):]" + transcript_value)
+    st.write(":blue[Transcript (Original):] " + transcript_value)
     
     # Task 1 - Correct Transcript
     st.write(":green[LLM Task 1 -- Identify Speaker & Improve Transcript:]")
@@ -332,14 +329,20 @@ for index, value in enumerate(json_object2):
     )
     llm_response = response.text
     st.markdown(llm_response)
+    
+    transcript_start = llm_response.find("LLM corrected transcript:") + len("LLM corrected transcript:")
+    transcript_text = llm_response[transcript_start:].strip()
+    speaker_start = llm_response.find("LLM predicted speaker:") + len("LLM predicted speaker:")
+    speaker_end = llm_response.find("language_code") - 5
+    speaker_text = llm_response[speaker_start:speaker_end].strip()
+    transcript_text_full = "(" + speaker_text + ") " + transcript_text
+    st.write(":blue[Transcript (Corrected):] " + transcript_text_full)
 
     # Task 2 - Provide Medical Advice
-    st.write(":green[LLM Task 2 -- Provide Medical Advice:]")
-    transcript_start = llm_response.find("LLM corrected transcript:") + len("LLM corrected transcript:")
-    transcript_end = llm_response.find("LLM confidence") - 5
-    transcript_text = llm_response[transcript_start:transcript_end].strip()
-    transcript += '\n\n' + transcript_text # use cumulative transcript 
+    transcript += '\n\n' + transcript_text_full # use cumulative transcript 
     input_text = "transcript: \n\n " + transcript
+    st.write(":green[LLM Task 2 -- Provide Medical Advice:]")
+    
     
     prompt_medical_advice2 = f"""
     {prompt_medical_advice}
