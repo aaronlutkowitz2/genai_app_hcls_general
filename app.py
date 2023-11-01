@@ -55,6 +55,7 @@ show_pages(
         , Section("Provider", ":hospital:")
         , Page("pages/Travelling Nurse.py", "A. Plan - Map Route")
         , Page("pages/Patient Summary.py", "B. Before - Generate Patient Summary")
+        , Page("pages/Bariatric Med Record to Struct.py", "B. Before - Search the Medical Record")
         , Page("pages/Looker HDE Ask Question.py", "B. Before - Chat w/ HDE Medical Record")
         , Page("pages/Scribbles Transcription.py", "C. During - Transcribe Encounter")
         , Page("pages/Multimodal Imaging.py", "D. After - Read Mammogram Image & Text")
@@ -63,7 +64,6 @@ show_pages(
         , Page("pages/Doctor_Appt_Concierge.py", "Doctor Appt Scheduling")
 
         , Section("HQ QNA", ":office:")
-        
         , Page("pages/Supply Chain PO Chat Answers.py", "QNA on Supply Chain Purchase Orders")
         , Page("pages/Speech to Text.py", "QNA with a Video")
 
@@ -72,7 +72,6 @@ show_pages(
         , Page("pages/Write a SQL Query.py", "Text 2 SQL")
 
         , Section("Researchers", ":eyeglasses:")
-        , Page("pages/Bariatric Med Record to Struct.py", "Sturcture the Medical Record")
         , Page("pages/Imaging Med Record to Struct.py", "Label Medical Imaging for Data Sci Model")
         , Page("pages/Highlight Demo.py", "Highlight a Document")
 

@@ -120,7 +120,7 @@ model_top_p = 0.8
 ### # Section 1: Process Context Files
 ################
 
-@st.cache_data
+# @st.cache_data
 def section1_pull_context_files():
     ####### Process Context File ########
 
@@ -132,6 +132,13 @@ def section1_pull_context_files():
     text = 'Process Files: :orange[**start**]'
     st.write(text)
 
+    # Show files? 
+    show_files = st.selectbox(
+        "Do you want to see the raw data?"
+        , ["Yes", "No"]
+        , index = 0
+    )
+
     # Storage
     storage_client = storage.Client()
     bucket_name = 'hcls_genai'
@@ -141,7 +148,6 @@ def section1_pull_context_files():
     bucket = storage_client.get_bucket(bucket_name)
     blob = bucket.blob(full_file_name)
     file_content = blob.download_as_text()
-    # st.write(file_content)
 
     # Break into sections
         ## ALERT !! ASW Assumption: all sections are broken out by the string "Section:"
@@ -150,7 +156,9 @@ def section1_pull_context_files():
     # Create a dict with section name & full string
         ## ALERT !! ASW Assumption: all sections titles end with a newline "\n" string 
     section_list2 = [{"section_name": s[:s.find('\\n')].strip(), "full_string": s} for s in section_list]
-    # st.write(section_list2)
+    if show_files == "Yes": 
+        st.write(':blue[File 1: Raw Medical Record]')
+        st.write(section_list2)
 
     ####### Process File Excluding Vitals Meds Labs ########
 
@@ -172,6 +180,9 @@ def section1_pull_context_files():
     df = pd.read_csv(
         full_file_name
     ) 
+    if show_files == "Yes": 
+        st.write(':blue[File 2: List of Elements + Prompts]')
+        st.write(df)
 
     text = 'Process Files: :green[**done**]'
     st.write(text)

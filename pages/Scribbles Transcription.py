@@ -92,7 +92,7 @@ st.header('60 Second Video')
 st.divider()
 st.header('Architecture')
 
-# components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vTb_Qe8AqxFZ9so49raQrT0xNFiWqs66FhPrZ9uT-tFM0xBjoPePZfEY54DZGjRF0MJpKhwp0s-sIWk/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
+components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vQ3xh1M7Ttzzy4Y_T4-kI7If9Bebwz4FUVuSKNdAQnydkzCaVy8A5RDHIYo2gCk7_LI-95RpGTRxeJU/embed?start=false&loop=false&delayms=3000000",height=800) # width=960,height=569
 
 ################
 ### General
