@@ -84,8 +84,8 @@ st.write('**Github repo**: https://github.com/aaronlutkowitz2/genai_app_hcls_gen
 st.divider()
 st.header('60 Second Video')
 
-# video_url = 'https://youtu.be/JMyGfydQGzk'
-# st_player(video_url)
+video_url = 'https://youtu.be/miRAYO1zOFE'
+st_player(video_url)
 
 # Architecture
 
@@ -259,8 +259,6 @@ Recommended Tasks:
 ### Section: Run Audio Loop
 ################
 
-st.divider()
-
 # Storage values
 client = storage.Client()
 BUCKET_NAME = utils_config.BUCKET_NAME
@@ -281,6 +279,13 @@ blob = str(bucket.blob(output_file_path).download_as_string())
 blob = blob[2:][:-1].replace("\\n","").replace("\\","").replace("endTime","endOffset") ## remove first 2, last character; replace "\" escapes
 json_object = json.loads(blob)
 json_object2 = json_object["results"]
+
+st.divider()
+st.header("Original Transcript")
+for index, value in enumerate(json_object2):
+    transcript_value = value["alternatives"][0]["transcript"]
+    st.write(transcript_value)
+st.divider()
 
 # Run through Loop
 transcript = ""
