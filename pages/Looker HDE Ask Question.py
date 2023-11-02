@@ -102,6 +102,41 @@ model_top_p = 0
 ### Looker Inputs
 ################
 
+# Looker inputs
+st.divider()
+st.header('1. Looker Inputs')
+
+# Grab Looker API credentials from api.keys.txt, which is not included in git
+with open('api_keys.txt', 'r') as file:
+    lines = file.readlines()
+
+api_keys = {}
+for line in lines:
+    variable, value = line.strip().split('=')
+    api_keys[variable] = value
+
+looker_id = api_keys['looker_id']
+looker_pw = api_keys['looker_pw']
+
+looker_sdk_base_url = "https://demoexpo.cloud.looker.com:19999"
+looker_env_str = "demoexpo"
+os.environ["LOOKERSDK_BASE_URL"] = looker_sdk_base_url #If your looker URL has .cloud in it (hosted on GCP), do not include :19999 (ie: https://your.cloud.looker.com).
+os.environ["LOOKERSDK_API_VERSION"] = "4.0" #3.1 is the default version. You can change this to 4.0 if you want.
+os.environ["LOOKERSDK_VERIFY_SSL"] = "true" #Defaults to true if not set. SSL verification should generally be on unless you have a real good reason not to use it. Valid options: true, y, t, yes, 1.
+os.environ["LOOKERSDK_TIMEOUT"] = "10" #Seconds till request timeout. Standard default is 120.
+
+# #Get the following values from your Users page in the Admin panel of your Looker instance > Users > Your user > Edit API keys. If you know your user id, you can visit https://your.looker.com/admin/users/<your_user_id>/edit.
+
+os.environ["LOOKERSDK_CLIENT_ID"] = looker_id
+os.environ["LOOKERSDK_CLIENT_SECRET"] = looker_pw
+
+sdk = looker_sdk.init40()
+# my_user = sdk.me()
+# st.write(my_user)
+
+st.write(':blue[**Looker Instance:**] ' + looker_env_str)
+st.write(':green[**Looker Environment Ready**]')
+
 patient_name = st.selectbox(
     'What patient do you want to review?'
     , (
