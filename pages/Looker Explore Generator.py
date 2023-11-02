@@ -117,8 +117,17 @@ st.divider()
 st.header('1. Looker Inputs')
 
 # Grab Looker API credentials from api.keys.txt, which is not included in git
-with open('api_keys.txt', 'r') as file:
-    lines = file.readlines()
+# Note: local uses api_keys.txt while cloud run uses app/ folder
+try: 
+    with open('app/api_keys.txt', 'r') as file:
+      lines = file.readlines()
+except FileNotFoundError:
+    try:
+        with open('api_keys.txt', 'r') as file:
+            lines = file.readlines()
+    except FileNotFoundError:
+        st.write("Error: The api_keys.txt file was not found.")
+        lines = []
 
 api_keys = {}
 for line in lines:
